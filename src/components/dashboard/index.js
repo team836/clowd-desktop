@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.css';
-import { Doughnut, Pie } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import Information from 'components/information';
 
 const DashBoard = () => {
