@@ -3,12 +3,15 @@ const path = require('path')
 const isDev = require('electron-is-dev')
 
 let mainWindow
+const { dialog } = require('electron')
 
 function createWindow() {
   mainWindow = new BrowserWindow({
     title: 'Clowd Desktop',
-    width: 900,
-    height: 680,
+    width: 1000,
+    height: 600,
+    minWidth: 600,
+    minHeight: 400,
     webPreferences: {
       nodeIntegration: true
     }
@@ -21,7 +24,9 @@ function createWindow() {
   if (isDev) {
     // mainWindow.webContents.openDevTools()
   }
+  // console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
 
+  // console.log("12312313")
   mainWindow.on('closed', () => (mainWindow = null))
 }
 
