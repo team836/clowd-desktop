@@ -6,6 +6,8 @@
     flex-direction: column;
     /* overflow: auto; */
   }
+
+  
 .header {
     display: flex;
     flex-direction: row;
@@ -29,14 +31,4 @@
     display: flex;
     flex-direction: row;
 }
-.chart {
-    /* background-color:tomato; */
-    width: 60%;
-    height: 80vh;
-    padding-left: 20px;
-}
 
-canvas {
-    width: 100% !important;
-    height: auto !important;
-}

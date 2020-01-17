@@ -26,31 +26,9 @@ function createWindow() {
   if (isDev) {
     // mainWindow.webContents.openDevTools()
   }
-  // console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
 
-  // console.log("12312313")
   mainWindow.on('closed', () => (mainWindow = null))
 }
-
-
-
-
-ipcMain.on('asynchronous-message', (event, arg) => {
-  console.log("async " + arg) // "ping" 출력
-
-  event.reply('asynchronous-reply', 'pong')
-})
-
-ipcMain.on('synchronous-message', (event, arg) => {
-  console.log("sync " + arg) // "ping" 출력
-  event.returnValue = 'pong'
-})
-
-
-// //menu bar disable
-// app.on('browser-window-created', function (e, window) {
-//   window.setMenu(null);
-// });
 
 app.on('ready', createWindow)
 
@@ -64,4 +42,18 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+
+
+ipcMain.on('asynchronous-message', (event, arg) => {
+  console.log("async " + arg) // "ping" 출력
+  const file = dialog.showOpenDialogSync({ properties: ['openFile', 'multiSelections'] })
+  console.log(file)
+  event.reply('asynchronous-reply', 'pong')
+})
+
+ipcMain.on('synchronous-message', (event, arg) => {
+  console.log("sync " + arg) // "ping" 출력
+  event.returnValue = 'pong'
 })
