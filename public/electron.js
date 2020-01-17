@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
 
@@ -31,6 +31,26 @@ function createWindow() {
   // console.log("12312313")
   mainWindow.on('closed', () => (mainWindow = null))
 }
+
+
+
+
+ipcMain.on('asynchronous-message', (event, arg) => {
+  console.log("async " + arg) // "ping" 출력
+
+  event.reply('asynchronous-reply', 'pong')
+})
+
+ipcMain.on('synchronous-message', (event, arg) => {
+  console.log("sync " + arg) // "ping" 출력
+  event.returnValue = 'pong'
+})
+
+
+// //menu bar disable
+// app.on('browser-window-created', function (e, window) {
+//   window.setMenu(null);
+// });
 
 app.on('ready', createWindow)
 
