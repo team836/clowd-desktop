@@ -4,11 +4,12 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    /* overflow: auto; */
   }
 .header {
     display: flex;
     flex-direction: row;
+    height: 20vh;
 }
 .dashboard-title {
     text-align: left;
@@ -33,23 +34,8 @@
     width: 60%;
     height: 80vh;
 }
-.chart-doughnut {
-    height: 100px;
-}
-.information {
-    /* background-color:rgb(58, 156, 71); */
-    width: 40%;
-    height: 50vh;
-    padding-left: 40px;
-    padding-top: 40px;
-}
 
 canvas {
     width: 100% !important;
     height: auto !important;
-}
-
-.subject {
-    color: #7E7E7E;
-    font-weight: bold;
 }

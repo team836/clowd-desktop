@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.css';
 import { Doughnut, Pie } from 'react-chartjs-2';
+import Information from 'components/information';
 
 const DashBoard = () => {
     const data = {
@@ -17,20 +18,18 @@ const DashBoard = () => {
         datasets: [{
             data: [223829, 5667],
             backgroundColor: [
-                '#FF6384',
-                '#36A2EB'
+                '#6C69FF',
+                '#FFFFFF'
             ],
             hoverBackgroundColor: [
-                '#FF6384',
-                '#36A2EB'
+                '#6C69FF',
+                '#FFFFFF'
             ]
         }]
     };
 
     const option = {
         cutoutPercentage: 80,
-        // responsive: false,
-        // maintainAspectRatio: false,
         responsive: true,
         maintainAspectRatio: false,
         // aspectRatio: 2,
@@ -63,22 +62,9 @@ const DashBoard = () => {
 
             <div className="main">
                 <div className="chart">
-                    <Doughnut className="chart-doughnut" data={data} options={option} style="height:200px" />
-
+                    <Doughnut className="chart-doughnut" data={data} options={option} />
                 </div>
-                <div className="information">
-                    <label className="subject">Ping</label>
-                    <br />
-                    82ms
-                    <br />
-                    <label className="subject">Upload</label>
-                    <br />
-                    15Mbps
-                    <br />
-                    <label className="subject">Download    </label>
-                    <br />
-                    17Mbps
-                </div>
+                <Information />
             </div>
 
         </div>

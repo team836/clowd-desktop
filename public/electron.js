@@ -8,10 +8,12 @@ const { dialog } = require('electron')
 function createWindow() {
   mainWindow = new BrowserWindow({
     title: 'Clowd Desktop',
-    width: 1000,
-    height: 600,
-    minWidth: 600,
-    minHeight: 400,
+    width: 800,
+    height: 500,
+    minWidth: 800,
+    minHeight: 500,
+    maxWidth: 1000,
+    maxHeight: 700,
     webPreferences: {
       nodeIntegration: true
     }
