@@ -19,7 +19,7 @@ const Coin = () => {
     return (
         <div className="coin">
             <img className="coin-image" src={Icon} />
-            <button className="dialog-open" onClick={ping}>open</button>
+            {/* <button className="dialog-open" onClick={ping}>open</button> */}
         </div>
     );
 }

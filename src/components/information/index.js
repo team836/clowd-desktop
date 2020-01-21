@@ -1,9 +1,7 @@
 import React from 'react';
 import './style.css';
 const Information = () => {
-
     return (
-
         <div className="information">
             <div className="info">
                 <label className="info-subject">Ping</label>

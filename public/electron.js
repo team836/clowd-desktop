@@ -14,7 +14,7 @@ function createWindow() {
     minHeight: 500,
     maxWidth: 1000,
     maxHeight: 700,
-    frame: false,
+    // frame: false,
     webPreferences: {
       nodeIntegration: true
     }
@@ -45,7 +45,10 @@ app.on('activate', () => {
   }
 })
 
-
+//menu bar disable
+app.on('browser-window-created', function (e, window) {
+  window.setMenu(null);
+});
 
 ipcMain.on('asynchronous-message', (event, arg) => {
   console.log("async " + arg) // "ping" 출력
