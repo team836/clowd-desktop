@@ -1,10 +1,13 @@
 import React from 'react'
 import './App.scss'
+import DashBoard from './components/dashboard'
+import Coin from './components/coin'
 
 const App: React.FC = () => {
   return (
     <div id="app">
-      <h1>Clowd Desktop</h1>
+      <DashBoard />
+      <Coin />
     </div>
   )
 }

@@ -1,0 +1,18 @@
+.information {
+    /* background-color:rgb(58, 156, 71); */
+    width: 40%;
+    height: 80vh;
+    padding-left: 40px;
+    padding-top: 40px;
+}
+.info {
+    margin: 20px;
+}
+.info-number {
+    font-size: 25px;
+    font-weight: bold;
+}
+.info-subject {
+    color: #7E7E7E;
+    font-weight: bold;
+}

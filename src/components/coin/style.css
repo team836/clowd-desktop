@@ -1,0 +1,15 @@
+.coin { 
+    background-color: #FFFFFF;
+    width: 30%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* justify-items: center; */
+    justify-content: center;
+    
+  }
+/* 
+  .coin-image {
+    margin-top: 20px;
+    height: 10px;
+  } */
