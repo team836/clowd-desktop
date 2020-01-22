@@ -37,8 +37,12 @@ function createWindow() {
 function createLoginWindow() {
   loginWindow = new BrowserWindow({
     title: 'login',
-    width: 400,
+    width: 300,
     height: 400,
+    minWidth: 300,
+    minHeight: 400,
+    maxWidth: 300,
+    maxHeight: 400,
     webPreferences: {
       nodeIntegration: true
     }
@@ -87,7 +91,7 @@ ipcMain.on('synchronous-message', (event, arg) => {
 })
 
 ipcMain.on('google-signIn', (event, arg) => {
-  console.log(arg) // "ping" 출력
+  // console.log(arg) // "ping" 출력
   createWindow()
   loginWindow.hide()
   event.reply('google-signIn-reply', 'ok')
