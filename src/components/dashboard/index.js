@@ -8,7 +8,7 @@ const DashBoard = () => {
     return (
         <div className="dashboard">
             <div className="header">
-                <div className="dashboard-title"> dashborad </div>
+                <div className="dashboard-title"> Dashborad </div>
                 <div className="setting"></div>
             </div>
             <div className="main">
