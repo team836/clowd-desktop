@@ -13,9 +13,9 @@ const Login = () => {
   }
 
   return (
-    <div id="login-page">
+    <div className="login-page">
       <h2>here is login page !</h2>
-      <button onClick={signIn}>google login</button>
+      <button className="login-button" onClick={signIn}></button>
     </div>
   )
 }
