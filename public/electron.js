@@ -16,7 +16,6 @@ function createWindow() {
     minHeight: 500,
     maxWidth: 1000,
     maxHeight: 700,
-    // frame: false,
     webPreferences: {
       nodeIntegration: true
     }
@@ -78,8 +77,6 @@ app.on('activate', () => {
 
 ipcMain.on('asynchronous-message', (event, arg) => {
   console.log('async ' + arg) // "ping" 출력
-  // const file = dialog.showOpenDialogSync({ properties: ['openFile', 'multiSelections'] })
-  // console.log(file)
   createLoginWindow()
   mainWindow.hide()
   event.reply('asynchronous-reply', 'pong')

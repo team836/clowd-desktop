@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './style.css'
 import Chart from 'react-apexcharts'
 
-const DataChart = ({ data, labels, average }) => {
+const DataChart = () => {
+  const [data, dataSet] = useState(10)
+
   const myChart = {
     optionsRadial: {
       colors: ['#CF93FF'],
@@ -11,7 +13,6 @@ const DataChart = ({ data, labels, average }) => {
           startAngle: 0,
           endAngle: 360,
           background: '#ffffff',
-
           hollow: {
             margin: 0,
             size: '70%',
@@ -40,7 +41,6 @@ const DataChart = ({ data, labels, average }) => {
               opacity: 0.2
             }
           },
-
           dataLabels: {
             showOn: 'always',
             name: {
@@ -78,7 +78,7 @@ const DataChart = ({ data, labels, average }) => {
       },
       labels: ['Percent']
     },
-    seriesRadial: [60]
+    seriesRadial: [data]
   }
   return (
     <div className="chart">
@@ -88,7 +88,6 @@ const DataChart = ({ data, labels, average }) => {
         type="radialBar"
         height="100%"
       />
-      {/* <canvas id="myChart" ref={chartRef}></canvas> */}
     </div>
   )
 }
