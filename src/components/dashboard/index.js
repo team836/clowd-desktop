@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.css'
 import Information from 'components/information'
-import Chart from 'components/chart'
+import DataChart from 'components/chart'
 
 const DashBoard = () => {
   return (
@@ -11,7 +11,7 @@ const DashBoard = () => {
         <div className="setting"></div>
       </div>
       <div className="main">
-        <Chart />
+        <DataChart />
         <Information />
       </div>
     </div>

@@ -1,58 +1,95 @@
-import React, { useEffect } from 'react'
-import { Chart, Doughnut, Line } from 'react-chartjs-2'
+import React from 'react'
 import './style.css'
+import Chart from 'react-apexcharts'
 
-const Chart1 = () => {
-  const data = {
-    labels: ['usage', 'non usage'],
-    value: 30,
-    color: '#F38630',
-    label: 'Sleep',
-    labelColor: 'white',
-    labelFontSize: '10',
-    labelAlign: 'left',
-    datasets: [
-      {
-        data: [223829, 5667],
-        backgroundColor: ['#6C69FF', '#FFFFFF'],
-        hoverBackgroundColor: ['#6C69FF', '#FFFFFF']
-      }
-    ]
-  }
+const DataChart = ({ data, labels, average }) => {
+  const myChart = {
+    optionsRadial: {
+      colors: ['#CF93FF'],
+      plotOptions: {
+        radialBar: {
+          startAngle: 0,
+          endAngle: 360,
+          background: '#ffffff',
 
-  const option = {
-    cutoutPercentage: 80,
-    responsive: true,
-    maintainAspectRatio: false,
-    // aspectRatio: 2,
-    legend: {
-      display: false
-    },
-    tooltips: {
-      callbacks: {
-        label: function(tooltipItem, data) {
-          var dataset = data.datasets[tooltipItem.datasetIndex]
-          var meta = dataset._meta[Object.keys(dataset._meta)[0]]
-          var total = meta.total
-          var currentValue = dataset.data[tooltipItem.index]
-          var percentage = parseFloat(((currentValue / total) * 100).toFixed(1))
-          return currentValue + ' (' + percentage + '%)'
-        },
-        title: function(tooltipItem, data) {
-          return data.labels[tooltipItem[0].index]
+          hollow: {
+            margin: 0,
+            size: '70%',
+            background: '#fff',
+            image: undefined,
+            imageOffsetX: 0,
+            imageOffsetY: 0,
+            position: 'front',
+            dropShadow: {
+              enabled: true,
+              top: 1,
+              left: 0,
+              blur: 4,
+              opacity: 0.2
+            }
+          },
+          track: {
+            background: '#fff',
+            strokeWidth: '67%',
+            margin: 0, // margin is in pixels
+            dropShadow: {
+              enabled: true,
+              top: 0,
+              left: 1,
+              blur: 4,
+              opacity: 0.2
+            }
+          },
+
+          dataLabels: {
+            showOn: 'always',
+            name: {
+              offsetY: -20,
+              show: true,
+              color: '#888',
+              fontSize: '13px'
+            },
+            value: {
+              formatter: function(val) {
+                return val
+              },
+              color: '#111',
+              fontSize: '30px',
+              show: true
+            }
+          }
         }
-      }
-    }
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'dark',
+          type: 'horizontal',
+          shadeIntensity: 0.5,
+          gradientToColors: ['#6C69FF'],
+          inverseColors: true,
+          opacityFrom: 1,
+          opacityTo: 1,
+          stops: [0, 100]
+        }
+      },
+      stroke: {
+        lineCap: 'round'
+      },
+      labels: ['Percent']
+    },
+    seriesRadial: [60]
   }
-
   return (
     <div className="chart">
-      <Doughnut data={data} options={option} />
-      {/* <canvas id="stockGraph" width="150" height="150">
-                current stock price: $3.15 +0.15
-            </canvas> */}
+      <Chart
+        options={myChart.optionsRadial}
+        series={myChart.seriesRadial}
+        type="radialBar"
+        height="100%"
+      />
+      {/* <canvas id="myChart" ref={chartRef}></canvas> */}
     </div>
   )
 }
-
-export default Chart1
+export default DataChart

@@ -1,17 +1,16 @@
-.coin { 
-    background-color: #FFFFFF;
-    width: 30%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    /* justify-items: center; */
-    justify-content: center;
-    align-items: center;
-    
-  }
+.coin {
+  background-color: #ffffff;
+  width: 30%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* justify-items: center; */
+  justify-content: center;
+  align-items: center;
+}
 
-  .coin-image {
-    /* margin-top: 20px; */
-    height: 180px;
-    width: 180px;
-  }
+.coin-image {
+  /* margin-top: 20px; */
+  height: 180px;
+  width: 180px;
+}
