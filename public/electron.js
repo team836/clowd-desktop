@@ -1,6 +1,24 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
+const io = require('socket.io-client')
+// ...
+var socket = io('http://localhost:8081')
+
+socket.on('welcome', () => {
+  console.log('welcome received') // displayed
+  socket.emit('test')
+})
+socket.on('error', (e) => {
+  console.log(e) // not displayed
+})
+socket.on('ok', () => {
+  console.log('OK received') // not displayed
+})
+socket.on('connect', () => {
+  console.log('connected') // displayed
+  socket.emit('test')
+})
 
 let mainWindow
 let loginWindow
@@ -92,4 +110,9 @@ ipcMain.on('google-signIn', (event, arg) => {
   createWindow()
   loginWindow.hide()
   event.reply('google-signIn-reply', 'ok')
+})
+
+ipcMain.on('connect-socket', (event, arg) => {
+  socket.emit('test')
+  event.reply('connect-socket-reply', 'ok')
 })
