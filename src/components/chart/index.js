@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 import './style.css'
 import Chart from 'react-apexcharts'
+const { ipcRenderer } = window.require('electron')
+
+ipcRenderer.on('connect-socket-reply', (event, arg) => {
+  console.log(arg)
+})
 
 const DataChart = () => {
   const [data, dataSet] = useState(10)
@@ -15,16 +20,16 @@ const DataChart = () => {
         hollow: {
           margin: 0,
           size: '70%',
-          background: '#fff',
+          background: '#F3F4F5',
           image: undefined,
           imageOffsetX: 0,
           imageOffsetY: 0,
           position: 'front',
           dropShadow: {
-            enabled: true,
+            enabled: false,
             top: 1,
             left: 0,
-            blur: 4,
+            blur: 0,
             opacity: 0.2
           }
         },
@@ -35,8 +40,8 @@ const DataChart = () => {
           dropShadow: {
             enabled: true,
             top: 0,
-            left: 1,
-            blur: 4,
+            left: 0,
+            blur: 1,
             opacity: 0.2
           }
         },
@@ -78,6 +83,10 @@ const DataChart = () => {
     labels: ['Percent']
   }
 
+  const connect = () => {
+    console.log('connect')
+    ipcRenderer.send('connect-socket', 'requset')
+  }
   return (
     <div className="chart">
       <Chart
@@ -86,6 +95,22 @@ const DataChart = () => {
         type="radialBar"
         height="100%"
       />
+      <button
+        onClick={() => {
+          dataSet(data - 5)
+        }}
+      >
+        -
+      </button>
+
+      <button
+        onClick={() => {
+          dataSet(data + 5)
+        }}
+      >
+        +
+      </button>
+      <button onClick={connect}>connect</button>
     </div>
   )
 }
