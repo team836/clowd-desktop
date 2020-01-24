@@ -5,7 +5,7 @@ import Icon from '../../assets/images/coin.jpg'
 const Coin = () => {
   return (
     <div className="coin">
-      <img className="coin-image" src={Icon} />
+      <img className="coin-image" src={Icon} alt="coin" />
     </div>
   )
 }
