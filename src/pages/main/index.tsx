@@ -1,7 +1,7 @@
 import React from 'react'
-import './App.scss'
-import DashBoard from './components/dashboard'
-import Coin from './components/coin'
+import './style.scss'
+import DashBoard from '../../components/dashboard'
+import Coin from '../../components/coin'
 
 const App: React.FC = () => {
   return (

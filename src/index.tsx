@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './globalstyle.scss'
-import Root from './root'
+import Router from './router'
 import * as serviceWorker from './serviceWorker'
 
-ReactDOM.render(<Root />, document.getElementById('clowd-desktop'))
+ReactDOM.render(<Router />, document.getElementById('clowd-desktop'))
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
