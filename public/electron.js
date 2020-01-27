@@ -2,22 +2,15 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
 const io = require('socket.io-client')
-// ...
+
 var socket = io('http://localhost:8081')
 
-socket.on('welcome', () => {
-  console.log('welcome received') // displayed
-  socket.emit('test')
-})
-socket.on('error', (e) => {
-  console.log(e) // not displayed
-})
-socket.on('ok', () => {
-  console.log('OK received') // not displayed
-})
-socket.on('connect', () => {
+socket.on('success-connect', () => {
   console.log('connected') // displayed
-  socket.emit('test')
+})
+
+socket.on('check1', () => {
+  console.log('receive pong') // displayed
 })
 
 let mainWindow
@@ -93,17 +86,17 @@ app.on('activate', () => {
 //   window.setMenu(null);
 // });
 
-ipcMain.on('asynchronous-message', (event, arg) => {
-  console.log('async ' + arg) // "ping" 출력
-  createLoginWindow()
-  mainWindow.hide()
-  event.reply('asynchronous-reply', 'pong')
-})
+// ipcMain.on('asynchronous-message', (event, arg) => {
+//   console.log('async ' + arg) // "ping" 출력
+//   createLoginWindow()
+//   mainWindow.hide()
+//   event.reply('asynchronous-reply', 'pong')
+// })
 
-ipcMain.on('synchronous-message', (event, arg) => {
-  console.log('sync ' + arg) // "ping" 출력
-  event.returnValue = 'pong'
-})
+// ipcMain.on('synchronous-message', (event, arg) => {
+//   console.log('sync ' + arg) // "ping" 출력
+//   event.returnValue = 'pong'
+// })
 
 ipcMain.on('google-signIn', (event, arg) => {
   // console.log(arg) // "ping" 출력
@@ -113,6 +106,6 @@ ipcMain.on('google-signIn', (event, arg) => {
 })
 
 ipcMain.on('connect-socket', (event, arg) => {
-  socket.emit('test')
-  event.reply('connect-socket-reply', 'ok')
+  console.log('clicked connect btn')
+  socket.emit('check')
 })
