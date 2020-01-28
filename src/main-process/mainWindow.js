@@ -24,10 +24,8 @@ function createWindow(browser) {
   if (isDev) {
     // browser.webContents.openDevTools()
   }
-
+  browser.hide()
   browser.on('closed', () => (browser = null))
-  const { setIpc } = require('./ipcMainHelper')
-  setIpc(browser)
 
   return browser
 }

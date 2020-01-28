@@ -24,9 +24,6 @@ function createLoginWindow(browser) {
 
   browser.on('closed', () => (browser = null))
 
-  const { setIpc } = require('./ipcMainHelper')
-  setIpc(browser)
-
   return browser
 }
 
