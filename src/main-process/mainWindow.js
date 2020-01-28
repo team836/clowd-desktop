@@ -2,8 +2,8 @@ const { BrowserWindow } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
 
-function createWindow() {
-  let mainWindow = new BrowserWindow({
+function createWindow(browser) {
+  browser = new BrowserWindow({
     title: 'Clowd Desktop',
     width: 800,
     height: 500,
@@ -16,18 +16,20 @@ function createWindow() {
     }
   })
 
-  mainWindow.loadURL(
+  browser.loadURL(
     isDev
       ? 'http://localhost:3000'
       : `file://${path.join(__dirname, '../build/index.html')}`
   )
   if (isDev) {
-    // mainWindow.webContents.openDevTools()
+    // browser.webContents.openDevTools()
   }
 
-  mainWindow.on('closed', () => (mainWindow = null))
+  browser.on('closed', () => (browser = null))
+  const { setIpc } = require('./ipcMainHelper')
+  setIpc(browser)
 
-  return mainWindow
+  return browser
 }
 
 module.exports = { createWindow }
