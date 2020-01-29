@@ -4,29 +4,33 @@ const { getFolderSize } = require('./fileStorage')
 function setupIpc(login, main, socket) {
   ipcMain.on('hide-main', (event, arg) => {
     main.hide()
+    console.log(arg)
     event.reply('hide-res', 'ok')
   })
   ipcMain.on('hide-login', (event, arg) => {
     login.hide()
+    console.log(arg)
     event.reply('hide-res', 'ok')
   })
   ipcMain.on('show-main', (event, arg) => {
     main.show()
+    console.log(arg)
     event.reply('show-res', 'ok')
   })
   ipcMain.on('show-login', (event, arg) => {
     login.show()
+    console.log(arg)
     event.reply('show-res', 'ok')
   })
-  ipcMain.on('test', (event, arg) => {
+  ipcMain.on('get-size', (event, arg) => {
+    console.log('get-size')
     getFolderSize().then((res) => {
-      console.log(res)
+      event.reply('get-size-res', res)
     })
   })
-  ipcMain.on('google-signIn', (event, arg) => {
-    main.show()
-    login.hide()
-    event.reply('google-signIn-reply', 'ok')
+  ipcMain.on('hello', (event, arg) => {
+    console.log("login's message")
+    socket.emit('hello', { name: '123' })
   })
 
   ipcMain.on('connect-socket', (event, arg) => {

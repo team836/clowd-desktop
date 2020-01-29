@@ -1,6 +1,6 @@
 const getSize = require('get-folder-size')
 const fs = require('fs')
-const dir = 'C:\\Users\\chea1\\AppData\\Local\\clowd'
+const dir = 'C:\\Users\\chea1\\AppData\\Local\\atom'
 
 function getFolderSize() {
   return new Promise((resolve, reject) => {
@@ -14,7 +14,7 @@ function getFolderSize() {
       }
       console.log(size + ' bytes')
       console.log((size / 1024 / 1024).toFixed(2) + ' MB')
-      resolve(size)
+      resolve(size / 1024 / 1024 / 1024) //return GB
     })
   })
 }

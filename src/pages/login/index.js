@@ -11,7 +11,6 @@ const Login = () => {
   const signIn = () => {
     ipcRenderer.send('google-signIn', 'sign-in')
   }
-
   return (
     <div className="login-page">
       <h2>here is login page !</h2>
