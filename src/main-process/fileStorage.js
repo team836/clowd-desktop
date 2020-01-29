@@ -1,9 +1,19 @@
 const getSize = require('get-folder-size')
+const fs = require('fs')
+const dir = 'C:\\Users\\chea1\\AppData\\Local\\clowd'
 
-getSize('C:\\Users\\chea1\\AppData\\Local\\atom', (err, size) => {
-  if (err) {
-    throw err
+function getFolderSize() {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
   }
-  console.log(size + ' bytes')
-  console.log((size / 1024 / 1024).toFixed(2) + ' MB')
-})
+
+  getSize(dir, (err, size) => {
+    if (err) {
+      throw err
+    }
+    console.log(size + ' bytes')
+    console.log((size / 1024 / 1024).toFixed(2) + ' MB')
+  })
+}
+
+module.exports = { getFolderSize }

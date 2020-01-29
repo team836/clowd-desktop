@@ -1,4 +1,5 @@
 const { ipcMain } = require('electron')
+const { getFolderSize } = require('./fileStorage')
 
 function setupIpc(login, main, socket) {
   ipcMain.on('hide-main', (event, arg) => {
@@ -18,7 +19,7 @@ function setupIpc(login, main, socket) {
     event.reply('show-res', 'ok')
   })
   ipcMain.on('test', (event, arg) => {
-    console.log('test')
+    getFolderSize()
   })
   ipcMain.on('google-signIn', (event, arg) => {
     main.show()
