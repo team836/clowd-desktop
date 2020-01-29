@@ -24,7 +24,6 @@ function createWindow(browser) {
   if (isDev) {
     // browser.webContents.openDevTools()
   }
-  browser.hide()
   browser.on('closed', () => (browser = null))
 
   return browser
