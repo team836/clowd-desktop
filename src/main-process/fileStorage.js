@@ -1,5 +1,6 @@
 const getSize = require('get-folder-size')
 const fs = require('fs')
+
 const dir = 'C:\\Users\\chea1\\AppData\\Local\\atom'
 
 function getFolderSize() {
