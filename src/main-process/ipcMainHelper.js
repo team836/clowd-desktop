@@ -19,7 +19,9 @@ function setupIpc(login, main, socket) {
     event.reply('show-res', 'ok')
   })
   ipcMain.on('test', (event, arg) => {
-    getFolderSize()
+    getFolderSize().then((res) => {
+      console.log(res)
+    })
   })
   ipcMain.on('google-signIn', (event, arg) => {
     main.show()
