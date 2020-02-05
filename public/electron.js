@@ -2,16 +2,18 @@ const { app, ipcMain } = require('electron')
 const { createWindow } = require('../src/main-process/mainWindow')
 const { createLoginWindow } = require('../src/main-process/loginWindow')
 const { setupSocket } = require('../src/main-process/socketHelper')
-const { setupIpc } = require('../src/main-process/ipcMainHelper')
-
+const { setupIpc } = require('../src/main-process/ipcController')
+const { SystemVariable } = require('../src/main-process/systemVariable')
+const { checkDiskSpace } = require('../src/main-process/diskspace')
+let systemVariable = new SystemVariable()
 let mainWindow
 let loginWindow
 let socket
-let server = 'wss://dev.clowd.xyz/v1/test'
-let local = 'http://localhost:8081'
+//netsh wlan show interfaces
+//wmic logicaldisk get size,freespace,caption
+
 app.on('ready', (info) => {
   loginWindow = createLoginWindow(loginWindow)
-  socket = setupSocket(local)
 })
 
 app.on('window-all-closed', () => {
@@ -27,8 +29,9 @@ app.on('activate', () => {
 })
 ipcMain.on('google-signIn', (event, arg) => {
   mainWindow = createWindow(mainWindow)
+  socket = setupSocket(systemVariable)
+  setupIpc(loginWindow, mainWindow, socket, systemVariable)
   loginWindow.hide()
-  setupIpc(loginWindow, mainWindow, socket)
   event.reply('google-signIn-reply', 'ok')
 })
 /***************** menu bar disable *****************/
