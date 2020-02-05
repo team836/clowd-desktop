@@ -6,7 +6,7 @@ class SystemVariable {
     SystemVariable.instance = this
     this.total = 5 //fetch from server
     this.usage = 0 // get-folder-size
-    this.server = 'wss://dev.clowd.xyz/v1/test'
+    this.server = 'wss://dev.clowd.xyz/v1/node'
     this.local = 'http://localhost:8081'
     this.dir = 'C:\\Users\\chea1\\AppData\\Local\\atom'
 

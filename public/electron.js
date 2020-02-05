@@ -1,7 +1,7 @@
 const { app, ipcMain } = require('electron')
 const { createWindow } = require('../src/main-process/mainWindow')
 const { createLoginWindow } = require('../src/main-process/loginWindow')
-const { setupSocket } = require('../src/main-process/socketHelper')
+const { setupSocket } = require('../src/main-process/wsSocket')
 const { setupIpc } = require('../src/main-process/ipcController')
 const { SystemVariable } = require('../src/main-process/systemVariable')
 const { checkDiskSpace } = require('../src/main-process/diskspace')
