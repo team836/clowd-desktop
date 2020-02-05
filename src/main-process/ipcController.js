@@ -1,6 +1,8 @@
 const { ipcMain } = require('electron')
-const { getFolderSize } = require('./fileStorage')
-
+const { LOCALDIR } = require('./pathfile')
+const checkDiskSpace = require('./diskspace')
+const checkFolderSize = require('./folderspace')
+const checkNetwork = require('./network')
 function setupIpc(login, main, socket, systemVariable) {
   /*
   visible function
@@ -28,11 +30,31 @@ function setupIpc(login, main, socket, systemVariable) {
   */
   ipcMain.on('fetch-main', async (event, arg) => {
     let res = new Object()
-    const size = await getFolderSize(systemVariable.dir)
+    const size = await checkFolderSize(LOCALDIR)
     systemVariable.usage = size
     res.usage = size
     res.total = systemVariable.total
     event.reply('fetch-main-res', res)
+  })
+
+  ipcMain.on('main-update-data', async (event, arg) => {
+    const disk = await checkDiskSpace()
+    const ntw = await checkNetwork()
+    const use = await checkFolderSize(LOCALDIR)
+    systemVariable.usage = use
+    systemVariable.free = disk.free
+    systemVariable.size = disk.size
+    systemVariable.bandwidth = ntw.bandwidth
+    console.log(
+      systemVariable.usage,
+      systemVariable.free,
+      systemVariable.size,
+      systemVariable.bandwidth
+    )
+    event.reply('main-update-data-res', {
+      usage: systemVariable.usage,
+      free: systemVariable.free
+    })
   })
   /*
   test function

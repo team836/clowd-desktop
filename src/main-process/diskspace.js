@@ -3,16 +3,31 @@
 const { exec } = require('child_process')
 
 function checkDiskSpace() {
-  const diskspace = exec(
-    'wmic logicaldisk get size,freespace,caption',
-    function(error, stdout, stderr) {
-      if (error) {
-        console.log('error')
+  return new Promise((resolve, reject) => {
+    exec(
+      'wmic logicaldisk get size,freespace,caption',
+      (error, stdout, stderr) => {
+        if (error) {
+          reject(err)
+        }
+        resolve(stdout ? mapOutput(stdout) : stderr)
       }
-      console.log('Child Process STDOUT: ' + stdout)
-      console.log('Child Process STDERR: ' + stderr)
-    }
-  )
+    )
+  })
 }
 
+function mapOutput(stdout) {
+  let parsed = stdout
+    .trim()
+    .split('\n')
+    .slice(1)
+    .map((line) => {
+      return line.trim().split(/\s+(?=[\d/])/)
+    })
+  parsed = parsed[0]
+  return {
+    free: (parseInt(parsed[1]) / Math.pow(1024, 1)).toFixed(2),
+    size: (parseInt(parsed[2]) / Math.pow(1024, 1)).toFixed(2)
+  }
+}
 module.exports = checkDiskSpace
