@@ -1,7 +1,7 @@
 const getSize = require('get-folder-size')
 const fs = require('fs')
 
-function getFolderSize(dir) {
+function checkFolderSize(dir) {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir)
@@ -11,11 +11,10 @@ function getFolderSize(dir) {
       if (err) {
         reject(err)
       }
-      console.log(size + ' bytes')
-      console.log((size / 1024 / 1024).toFixed(2) + ' MB')
-      resolve(size / 1024 / 1024 / 1024) //return GB
+      // console.log((size / 1024).toFixed(2) + ' KB')
+      resolve(parseFloat(size / 1024)) //return KB
     })
   })
 }
 
-module.exports = { getFolderSize }
+module.exports = checkFolderSize
