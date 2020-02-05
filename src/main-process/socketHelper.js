@@ -1,16 +1,20 @@
 const io = require('socket.io-client')
 
-function setupSocket(url) {
-  const socket = io(url)
+function setupSocket(systemVariable) {
+  const socket = io(systemVariable.server)
+
   socket.on('success-connect', () => {
     console.log('connected') // displayed
   })
-
   socket.on('check1', () => {
     console.log('receive pong') // displayed
   })
   socket.on('ping', () => {
-    console.log('xxxxxx')
+    console.log('get ping')
+    socket.emit('pong', {
+      usage: systemVariable.usage,
+      total: systemVariable.total
+    })
   })
   socket.on('pong', () => {
     console.log('get pong')

@@ -1,9 +1,7 @@
 const getSize = require('get-folder-size')
 const fs = require('fs')
 
-const dir = 'C:\\Users\\chea1\\AppData\\Local\\atom'
-
-function getFolderSize() {
+function getFolderSize(dir) {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir)

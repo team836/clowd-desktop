@@ -5,19 +5,24 @@ import { optionsRadial } from './chartOption'
 const { ipcRenderer } = window.require('electron')
 
 const DataChart = () => {
-  const [totalData, totalDataSet] = useState(5)
+  const [totalData, totalDataSet] = useState(0)
   const [data, dataSet] = useState(0)
   const seriesRadial = [data]
-  ipcRenderer.on('get-size-res', (event, arg) => {
-    dataSet(parseFloat((arg / totalData).toFixed(2)))
+  ipcRenderer.on('fetch-main-res', (event, arg) => {
+    dataSet(parseFloat((arg.usage / arg.total).toFixed(2)))
+    totalDataSet(arg.total)
   })
   useEffect(() => {
-    ipcRenderer.send('get-size')
+    ipcRenderer.send('fetch-main')
   }, [])
 
   const connect = () => {
     console.log('connect')
     ipcRenderer.send('connect-socket', 'requset')
+  }
+  const test = () => {
+    console.log('test')
+    ipcRenderer.send('test', 'hehehe')
   }
   return (
     <div className="chart">
@@ -43,6 +48,7 @@ const DataChart = () => {
         +
       </button>
       <button onClick={connect}>connect</button>
+      <button onClick={test}>test</button>
     </div>
   )
 }
