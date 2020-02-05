@@ -4,25 +4,12 @@ class SystemVariable {
       return SystemVariable.instance
     }
     SystemVariable.instance = this
-    this.total = 5 //fetch from server
-    this.usage = 0 // get-folder-size
-    this.server = 'wss://dev.clowd.xyz/v1/node'
-    this.local = 'http://localhost:8081'
-    this.dir = 'C:\\Users\\chea1\\AppData\\Local\\atom'
-
+    this.bandwidth = 0 //fetch from server
+    this.capacity = 0 // get-folder-size
+    this.usage = 0
+    this.size = 0
+    this.free = 0
     return this
-  }
-  getTotal() {
-    return this.total
-  }
-  getUsage() {
-    return this.usage
-  }
-  setTotal(_total) {
-    this.total = _total
-  }
-  setUsage(_usage) {
-    this.usage = _usage
   }
 }
 
