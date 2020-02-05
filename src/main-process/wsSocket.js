@@ -12,7 +12,7 @@ async function setupSocket(systemVariable) {
   ws.on('ping', function ping(data) {
     console.log(data)
     const obj = {
-      capacity: systemVariable.size,
+      capacity: systemVariable.diskSize,
       bandwidth: systemVariable.bandwidth
     }
     ws.send(obj) //정보 실어 보내기
