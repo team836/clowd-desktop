@@ -4,11 +4,12 @@ class SystemVariable {
       return SystemVariable.instance
     }
     SystemVariable.instance = this
-    this.bandwidth = 0 //fetch from server
-    this.capacity = 0 // get-folder-size
-    this.usage = 0
-    this.size = 0
-    this.free = 0
+    this.bandwidth = 0 //fetch from server Mbps
+    this.capacity = 0 // min(free ,total-usage) KB
+    this.folderUsage = 0 // folder using size KB
+    this.settingSize = 0 // set user total GB-> KB
+    this.diskSize = 0 // disk total size KB
+    this.diskFree = 0 // disk remain size KB
     return this
   }
 }

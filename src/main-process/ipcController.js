@@ -36,24 +36,23 @@ function setupIpc(login, main, socket, systemVariable) {
     res.total = systemVariable.total
     event.reply('fetch-main-res', res)
   })
-
   ipcMain.on('main-update-data', async (event, arg) => {
     const disk = await checkDiskSpace()
     const ntw = await checkNetwork()
     const use = await checkFolderSize(LOCALDIR)
-    systemVariable.usage = use
-    systemVariable.free = disk.free
-    systemVariable.size = disk.size
+    systemVariable.folderUsage = use
+    systemVariable.diskFree = disk.free
+    systemVariable.diskSize = disk.size
     systemVariable.bandwidth = ntw.bandwidth
     console.log(
-      systemVariable.usage,
-      systemVariable.free,
-      systemVariable.size,
+      systemVariable.folderUsage,
+      systemVariable.diskFree,
+      systemVariable.diskSize,
       systemVariable.bandwidth
     )
     event.reply('main-update-data-res', {
-      usage: systemVariable.usage,
-      free: systemVariable.free
+      usage: systemVariable.folderUsage,
+      free: systemVariable.diskFree
     })
   })
   /*
