@@ -1,8 +1,8 @@
-const { BrowserWindow } = require('electron')
-const path = require('path')
-const isDev = require('electron-is-dev')
+import { BrowserWindow } from 'electron'
+import path from 'path'
+import isDev from 'electron-is-dev'
 
-function createWindow(browser) {
+export function createWindow(browser: BrowserWindow) {
   browser = new BrowserWindow({
     title: 'Clowd Desktop',
     width: 800,
@@ -24,9 +24,7 @@ function createWindow(browser) {
   if (isDev) {
     // browser.webContents.openDevTools()
   }
-  browser.on('closed', () => (browser = null))
+  // browser.on('closed', () => (browser = null))
 
   return browser
 }
-
-module.exports = { createWindow }

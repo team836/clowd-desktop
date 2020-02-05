@@ -1,7 +1,9 @@
-const getSize = require('get-folder-size')
-const fs = require('fs')
+import getSize from 'get-folder-size'
+import fs from 'fs'
 
-function getFolderSize(dir) {
+const dir = 'C:\\Users\\chea1\\AppData\\Local\\atom'
+
+export function getFolderSize() {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir)
@@ -17,5 +19,3 @@ function getFolderSize(dir) {
     })
   })
 }
-
-module.exports = { getFolderSize }
