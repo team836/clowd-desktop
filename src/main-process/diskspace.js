@@ -26,8 +26,8 @@ function mapOutput(stdout) {
     })
   parsed = parsed[0]
   return {
-    free: (parseInt(parsed[1]) / Math.pow(1024, 1)).toFixed(2),
-    size: (parseInt(parsed[2]) / Math.pow(1024, 1)).toFixed(2)
+    free: parseInt(parsed[1]) / Math.pow(1024, 1),
+    size: parseInt(parsed[2]) / Math.pow(1024, 1)
   }
 }
 module.exports = checkDiskSpace

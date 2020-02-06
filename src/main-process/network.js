@@ -24,7 +24,7 @@ function mapOutput(stdout) {
       return line.includes('Mbps')
     })
   parsed = parsed[0]
-  parsed = parsed.split(':')[1].trim()
+  parsed = parseInt(parsed.split(':')[1].trim())
   return { bandwidth: parsed }
 }
 module.exports = checkNetwork
