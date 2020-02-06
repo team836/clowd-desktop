@@ -4,7 +4,7 @@ import Information from 'components/information'
 import DataChart from 'components/chart'
 import UnionSVG from '../../assets/icons/Union.svg'
 
-const DashBoard = () => {
+const DashBoard = ({ capacity, folderUsage }) => {
   return (
     <div className="dashboard">
       <div className="header">
@@ -14,7 +14,7 @@ const DashBoard = () => {
         </div>
       </div>
       <div className="main">
-        <DataChart />
+        <DataChart capacity={capacity} folderUsage={folderUsage} />
         <Information />
       </div>
     </div>
