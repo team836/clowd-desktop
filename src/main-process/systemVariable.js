@@ -10,7 +10,6 @@ class SystemVariable {
     this.settingSize = 1000000 // set user total KB
     this.capacity = 0 // min(free ,total-usage) KB
     this.bandwidth = 0 //fetch from server Mbps
-
     return this
   }
   print() {

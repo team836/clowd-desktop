@@ -1,9 +1,9 @@
 const { app, ipcMain } = require('electron')
-const { createWindow } = require('../src/main-process/mainWindow')
-const { createLoginWindow } = require('../src/main-process/loginWindow')
 const { setupSocket } = require('../src/main-process/wsSocket')
 const { setupIpc } = require('../src/main-process/ipcController')
+const { createWindow } = require('../src/main-process/mainWindow')
 const { SystemVariable } = require('../src/main-process/systemVariable')
+const { createLoginWindow } = require('../src/main-process/loginWindow')
 
 let systemVariable = new SystemVariable()
 let mainWindow

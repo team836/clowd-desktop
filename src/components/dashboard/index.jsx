@@ -3,7 +3,6 @@ import './style.css'
 import Information from 'components/information'
 import DataChart from 'components/chart'
 import UnionSVG from '../../assets/icons/Union.svg'
-import { setServers } from 'dns'
 
 const DashBoard = ({ folderUsage, settingSize }) => {
   return (
@@ -11,7 +10,7 @@ const DashBoard = ({ folderUsage, settingSize }) => {
       <div className="header">
         <div className="dashboard-title"> Dashborad </div>
         <div className="setting">
-          <img src={UnionSVG} />
+          <img src={UnionSVG} alt="setting" />
         </div>
       </div>
       <div className="main">

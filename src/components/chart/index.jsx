@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './style.css'
 import Chart from 'react-apexcharts'
 import { optionsRadial } from './chartOption'
