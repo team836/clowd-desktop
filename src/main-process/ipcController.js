@@ -44,9 +44,17 @@ function setupIpc(login, main, socket, systemVariable) {
     systemVariable.diskFree = disk.free
     systemVariable.diskSize = disk.size
     systemVariable.bandwidth = ntw.bandwidth
+    systemVariable.capacity = Math.min(
+      systemVariable.diskFree,
+      systemVariable.settingSize - systemVariable.folderUsage
+    )
+    console.log(
+      systemVariable.folderUsage,
+      systemVariable.settingSize,
+      systemVariable.diskFree
+    )
     event.reply('main-update-data-res', {
       folderUsage: systemVariable.folderUsage,
-      capacity: systemVariable.diskFree,
       settingSize: systemVariable.settingSize
     })
   })

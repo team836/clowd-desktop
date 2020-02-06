@@ -3,8 +3,9 @@ import './style.css'
 import Chart from 'react-apexcharts'
 import { optionsRadial } from './chartOption'
 
-const DataChart = ({ capacity, folderUsage }) => {
-  const seriesRadial = [parseInt(folderUsage / capacity)]
+const DataChart = ({ folderUsage, settingSize }) => {
+  let percent = parseInt((folderUsage / settingSize) * 100)
+  const seriesRadial = [percent]
   return (
     <div className="chart">
       <Chart
