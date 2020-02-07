@@ -40,11 +40,7 @@ function setupIpc(login, main, socket, systemVariable) {
       systemVariable.diskFree,
       systemVariable.settingSize - systemVariable.folderUsage
     )
-    const obj = {
-      capacity: systemVariable.capacity,
-      bandwidth: systemVariable.bandwidth
-    }
-    console.log(JSON.stringify(obj))
+    systemVariable.print()
     event.reply('main-update-data-res', {
       folderUsage: systemVariable.folderUsage,
       settingSize: systemVariable.settingSize

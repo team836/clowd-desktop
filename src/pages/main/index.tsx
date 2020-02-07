@@ -8,6 +8,7 @@ const App: React.FC = () => {
   const [folderUsage, setFolderUsage] = useState(0)
   const [settingSize, setSettingSize] = useState(0)
   ipcRenderer.on('main-update-data-res', (event, arg) => {
+    console.log(arg)
     setFolderUsage(arg.folderUsage)
     setSettingSize(arg.settingSize)
   })

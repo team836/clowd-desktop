@@ -4,12 +4,15 @@ const { exec } = require('child_process')
 
 function checkNetwork() {
   return new Promise((resolve, reject) => {
-    exec('netsh wlan show interfaces', (error, stdout, stderr) => {
-      if (error) {
-        reject(err)
+    exec(
+      'cmd /c chcp 65001>nul &&netsh wlan show interfaces',
+      (error, stdout, stderr) => {
+        if (error) {
+          reject(err)
+        }
+        resolve(stdout ? mapOutput(stdout) : stderr)
       }
-      resolve(stdout ? mapOutput(stdout) : stderr)
-    })
+    )
   })
 }
 
