@@ -2,10 +2,10 @@
 
 const { exec } = require('child_process')
 
-function checkDiskSpace() {
+function checkNetwork() {
   return new Promise((resolve, reject) => {
     exec(
-      'wmic logicaldisk get size,freespace,caption',
+      'cmd /c chcp 65001>nul &&netsh wlan show interfaces',
       (error, stdout, stderr) => {
         if (error) {
           reject(err)
@@ -16,18 +16,18 @@ function checkDiskSpace() {
   })
 }
 
+/**
+ * @param {string} stdout
+ */
 function mapOutput(stdout) {
   let parsed = stdout
     .trim()
-    .split('\n')
-    .slice(1)
-    .map((line) => {
-      return line.trim().split(/\s+(?=[\d/])/)
+    .split('\r\n')
+    .filter((line) => {
+      return line.includes('Mbps')
     })
   parsed = parsed[0]
-  return {
-    free: parseInt(parsed[1]) / Math.pow(1024, 1),
-    size: parseInt(parsed[2]) / Math.pow(1024, 1)
-  }
+  parsed = parseInt(parsed.split(':')[1].trim())
+  return { bandwidth: parsed }
 }
-module.exports = checkDiskSpace
+module.exports = checkNetwork

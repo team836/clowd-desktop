@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import './style.css'
 const Information = () => {
-  const [ping, pingSet] = useState(82)
-  const [upload, uploadSet] = useState(32)
-  const [download, downloadSet] = useState(17)
+  const [ping] = useState(82)
+  const [upload] = useState(32)
+  const [download] = useState(17)
   return (
     <div className="information">
       <div className="info">
