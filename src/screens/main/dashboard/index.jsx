@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './style.css'
+import './style.scss'
 import Information from '../information'
 import DataChart from '../chart'
 import Modal from '../modal'

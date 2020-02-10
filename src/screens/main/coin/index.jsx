@@ -1,5 +1,5 @@
 import React from 'react'
-import './style.css'
+import './style.scss'
 import Icon from '../../../assets/images/coin.jpg'
 
 const Coin = () => {
