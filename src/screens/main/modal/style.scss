@@ -1,3 +1,9 @@
+@mixin media($queryString) {
+  @media #{$queryString} {
+    @content;
+  }
+}
+
 .modal-wrapper {
   position: fixed;
   top: 0;
@@ -12,33 +18,33 @@
   z-index: 10;
   opacity: 0;
   transition: opacity 200ms ease;
-}
-
-.modal-wrapper.loaded {
-  opacity: 1;
-}
-
-.modal-wrapper.loaded .modal {
-  transform: translateY(0);
+  &.loaded {
+    opacity: 1;
+  }
+  &.loaded .modal {
+    transform: translateY(0);
+  }
 }
 
 .modal {
-  z-index: 1;
+  z-index: 11;
   background-color: white;
   width: 70%;
   padding: 16px;
   left: 15%;
   top: 30%;
+  text-align: center;
+  font-weight: bold;
   box-sizing: border-box;
   transition: all 0.3s ease-out;
   border-radius: 10px;
   transform: translateY(1rem);
   transition: transform 200ms ease;
-}
-
-@media (min-width: 600px) {
-  .modal {
+  @include media('(max-width: 800px)') {
     width: 500px;
     left: calc(50% - 250px);
+  }
+  .modal-text {
+    font-weight: bold;
   }
 }

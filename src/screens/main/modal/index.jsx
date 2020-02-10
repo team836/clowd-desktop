@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import './style.css'
+import './style.scss'
 
 const Modal = ({ setToggle }) => {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -18,7 +18,9 @@ const Modal = ({ setToggle }) => {
         }, 200)
       }}
     >
-      <div className="modal">i'm modal</div>
+      <div className="modal">
+        <div className="modal-text">Set the limit</div>
+      </div>
     </div>
   )
 }
