@@ -10,10 +10,10 @@ const DataChart = ({ folderUsage, settingSize }) => {
   return (
     <div className="chart">
       <Chart
+        height="100%"
         options={optionsRadial}
         series={seriesRadial}
         type="radialBar"
-        height="100%"
       />
     </div>
   )
