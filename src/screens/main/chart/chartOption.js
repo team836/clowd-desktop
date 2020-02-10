@@ -1,5 +1,18 @@
 export const optionsRadial = {
   colors: ['#CF93FF'],
+  animations: {
+    enabled: true,
+    easing: 'easeinout',
+    speed: 100,
+    animateGradually: {
+      enabled: true,
+      delay: 150
+    },
+    dynamicAnimation: {
+      enabled: true,
+      speed: 350
+    }
+  },
   plotOptions: {
     radialBar: {
       startAngle: 0,
@@ -37,13 +50,14 @@ export const optionsRadial = {
         showOn: 'always',
         name: {
           offsetY: -20,
-          show: true,
+          show: false,
           color: '#888',
           fontSize: '13px'
         },
         value: {
+          offsetY: 10,
           formatter: function(val) {
-            return val
+            return val + '%'
           },
           color: '#111',
           fontSize: '30px',

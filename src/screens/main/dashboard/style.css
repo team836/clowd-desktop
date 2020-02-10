@@ -4,6 +4,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+
   /* overflow: auto; */
 }
 
@@ -30,4 +31,10 @@
 .main {
   display: flex;
   flex-direction: row;
+}
+.setting-icon {
+  width: 2rem;
+}
+.setting-icon:hover {
+  cursor: pointer;
 }
