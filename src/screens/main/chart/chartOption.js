@@ -1,4 +1,7 @@
 export const optionsRadial = {
+  chart: {
+    width: '200px'
+  },
   colors: ['#CF93FF'],
   plotOptions: {
     radialBar: {
@@ -37,13 +40,14 @@ export const optionsRadial = {
         showOn: 'always',
         name: {
           offsetY: -20,
-          show: true,
+          show: false,
           color: '#888',
           fontSize: '13px'
         },
         value: {
+          offsetY: 10,
           formatter: function(val) {
-            return val
+            return val + '%'
           },
           color: '#111',
           fontSize: '30px',

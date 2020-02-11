@@ -1,7 +1,7 @@
 const { ipcMain } = require('electron')
 const { LOCALDIR } = require('./pathfile')
-const checkDiskSpace = require('./diskspace')
 const checkFolderSize = require('./folderspace')
+const checkDiskSpace = require('check-disk-space')
 const checkNetwork = require('./network')
 function setupIpc(login, main, socket, systemVariable) {
   /*
@@ -29,9 +29,10 @@ function setupIpc(login, main, socket, systemVariable) {
   data
   */
   ipcMain.on('main-update-data', async (event, arg) => {
-    const disk = await checkDiskSpace()
     const ntw = await checkNetwork()
     const use = await checkFolderSize(LOCALDIR)
+    const disk = await checkDiskSpace(LOCALDIR)
+
     systemVariable.folderUsage = use
     systemVariable.diskFree = disk.free
     systemVariable.diskSize = disk.size

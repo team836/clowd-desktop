@@ -1,0 +1,50 @@
+@mixin media($queryString) {
+  @media #{$queryString} {
+    @content;
+  }
+}
+
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(30px) saturate(1.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  &.loaded {
+    opacity: 1;
+  }
+  &.loaded .modal {
+    transform: translateY(0);
+  }
+}
+
+.modal {
+  z-index: 11;
+  background-color: white;
+  width: 70%;
+  padding: 16px;
+  left: 15%;
+  top: 30%;
+  text-align: center;
+  font-weight: bold;
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
+  border-radius: 10px;
+  transform: translateY(1rem);
+  transition: transform 200ms ease;
+  @include media('(max-width: 800px)') {
+    width: 500px;
+    left: calc(50% - 250px);
+  }
+  .modal-text {
+    font-weight: bold;
+  }
+}

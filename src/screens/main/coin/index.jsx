@@ -1,6 +1,6 @@
 import React from 'react'
-import './style.css'
-import Icon from '../../assets/images/coin.jpg'
+import './style.scss'
+import Icon from '../../../assets/images/coin.jpg'
 
 const Coin = () => {
   return (

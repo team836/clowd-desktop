@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, BrowserRouter } from 'react-router-dom'
-import { Login, Main } from './pages'
+import { Login, Main } from './screens'
 
 const Router: React.FC = () => (
   <BrowserRouter>
