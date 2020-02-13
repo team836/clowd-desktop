@@ -34,7 +34,7 @@ ipcMain.on('google-signIn', (event, arg) => {
 })
 
 /***************** menu bar disable *****************/
-// app.on('browser-window-created', function (e, window) {
-//   window.setMenu(null);
-// });
+// app.on('browser-window-created', function(e, window) {
+//   window.setMenu(null)
+// })
 /****************************************************/
