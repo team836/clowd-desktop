@@ -9,8 +9,8 @@ function createWindow(browser) {
     height: 500,
     minWidth: 800,
     minHeight: 500,
-    maxWidth: 1000,
-    maxHeight: 700,
+    // maxWidth: 1000,
+    // maxHeight: 700,
     webPreferences: {
       nodeIntegration: true
     }
@@ -26,6 +26,7 @@ function createWindow(browser) {
   }
   browser.on('closed', () => (browser = null))
 
+  browser.setMenuBarVisibility(false)
   return browser
 }
 

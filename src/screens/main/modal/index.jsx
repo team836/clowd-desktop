@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import './style.scss'
 
 const Modal = ({ setToggle }) => {
-  const [limit, setLimit] = useState(40)
+  const [value, setValue] = useState(50)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [fillWidthPercent, setFillWidthPercent] = useState(50)
   useEffect(() => {
     setIsLoaded(true)
   }, [])
@@ -26,17 +27,42 @@ const Modal = ({ setToggle }) => {
       >
         <div className="modal-text">Set the limit</div>
         <div className="slider-wrapper">
+          <div className="bar-background" />
+          <div
+            className="bar-fill"
+            style={{
+              width: `${fillWidthPercent}%`
+            }}
+          />
           <input
             type="range"
-            min="1"
+            min="0"
             max="100"
-            value={limit}
+            step="1"
+            value={value}
             className="slider"
             id="myRange"
-            onRateChange={() => {
-              console.log('123')
+            onChange={(e) => {
+              setValue(e.target.value)
+              const percent = e.target.value
+              setFillWidthPercent(percent)
             }}
-          ></input>
+          />
+        </div>
+        <div className="label-wrapper">
+          {/* <div className="start-label">0</div> */}
+          <div
+            className="current-label"
+            style={{
+              left: `calc(${26 /
+                10}px + ${fillWidthPercent}% - ${fillWidthPercent /
+                100} * ${26}px)`
+              // left: `calc(${fillWidthPercent}%)`
+            }}
+          >
+            {value}
+          </div>
+          {/* <div className="end-label">100</div> */}
         </div>
       </div>
     </div>
