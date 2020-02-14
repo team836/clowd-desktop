@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import './style.scss'
 import Granim from 'granim'
+const { ipcRenderer } = window.require('electron')
 
 const App = () => {
   const [value, setValue] = useState(50)
-  const [fillWidthPercent, setFillWidthPercent] = useState(50)
+  const [fillWidthPercent, setFillWidthPercent] = useState(0)
+  const [folderUsage, setFolderUsage] = useState(0)
+  const [settingSize, setSettingSize] = useState(0)
+  ipcRenderer.on('main-update-data-res', (event, arg) => {
+    setFolderUsage(arg.folderUsage)
+    setSettingSize(arg.settingSize)
+    setFillWidthPercent((arg.folderUsage / arg.settingSize) * 100)
+  })
+  useEffect(() => {
+    ipcRenderer.send('main-update-data')
+    setInterval(() => {
+      ipcRenderer.send('main-update-data')
+    }, 20000)
+  }, [])
 
   useEffect(() => {
     const granimInstance = new Granim({
