@@ -31,6 +31,13 @@
     justify-content: center;
     flex-direction: column;
     color: #fff;
+    .icon-wrapper {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      .setting-icon {
+      }
+    }
     .text {
       $font-size: 20vw;
       line-height: 0.5;
@@ -42,20 +49,20 @@
         font-size: $font-size / 4;
       }
     }
-  }
-  .bar-background {
-    // position: fixed;
-    background-color: rgba($color: rgb(255, 255, 255), $alpha: 0.3);
-    mix-blend-mode: overlay;
-    width: 60%;
-    height: 0.5rem;
-    border-radius: 50px;
-    margin-top: 3rem;
-    .bar-fill {
-      width: auto;
+    .bar-background {
+      // position: fixed;
+      background-color: rgba($color: rgb(255, 255, 255), $alpha: 0.3);
+      mix-blend-mode: overlay;
+      width: 60%;
       height: 0.5rem;
       border-radius: 50px;
-      background: rgba(255, 255, 255, 0.7);
+      margin-top: 3rem;
+      .bar-fill {
+        width: auto;
+        height: 0.5rem;
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.7);
+      }
     }
   }
 }

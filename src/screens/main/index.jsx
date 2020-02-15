@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './style.scss'
 import Granim from 'granim'
+import Modal from './modal'
+import { ReactComponent as Icon } from '../../assets/icons/Union.svg'
+
 const { ipcRenderer } = window.require('electron')
 
 const App = () => {
@@ -8,6 +11,8 @@ const App = () => {
   const [fillWidthPercent, setFillWidthPercent] = useState(0)
   const [folderUsage, setFolderUsage] = useState(0)
   const [settingSize, setSettingSize] = useState(0)
+  const [toggle, setToggle] = useState(false)
+
   ipcRenderer.on('main-update-data-res', (event, arg) => {
     setFolderUsage(arg.folderUsage)
     setSettingSize(arg.settingSize)
@@ -38,8 +43,16 @@ const App = () => {
 
   return (
     <div id="app">
+      {toggle && <Modal setToggle={setToggle} />}
       <canvas id="clowd-desktop-background" />
       <h1 className="header">
+        <div className="icon-wrapper">
+          <Icon
+            className="setting-icon"
+            alt="setting"
+            onClick={() => setToggle(!toggle)}
+          />
+        </div>
         <div className="text">
           <span className="amount">2189</span>
           <span className="unit">Files</span>

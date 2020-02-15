@@ -25,11 +25,11 @@ const Modal = ({ setToggle }) => {
           e.stopPropagation()
         }}
       >
-        <div className="modal-text">Set the limit</div>
+        <div className="modal-text">Set the limit(GB)</div>
         <div className="slider-wrapper">
-          <div className="bar-background" />
+          <div className="slider-background" />
           <div
-            className="bar-fill"
+            className="slider-fill"
             style={{
               width: `${fillWidthPercent}%`
             }}
@@ -50,7 +50,6 @@ const Modal = ({ setToggle }) => {
           />
         </div>
         <div className="label-wrapper">
-          {/* <div className="start-label">0</div> */}
           <div
             className="current-label"
             style={{
@@ -62,7 +61,6 @@ const Modal = ({ setToggle }) => {
           >
             {value}
           </div>
-          {/* <div className="end-label">100</div> */}
         </div>
       </div>
     </div>
