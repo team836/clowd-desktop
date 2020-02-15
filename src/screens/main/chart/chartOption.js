@@ -1,6 +1,6 @@
 export const optionsRadial = {
   chart: {
-    width: '200px'
+    height: 1280
   },
   colors: ['#CF93FF'],
   plotOptions: {
@@ -26,7 +26,7 @@ export const optionsRadial = {
       },
       track: {
         background: '#fff',
-        strokeWidth: '67%',
+        strokeWidth: '100%',
         margin: 0, // margin is in pixels
         dropShadow: {
           enabled: true,
