@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import './style.scss'
+import { ReactComponent as Icon } from '../../assets/icons/Union.svg'
 import Granim from 'granim'
 import Modal from './modal'
-import { ReactComponent as Icon } from '../../assets/icons/Union.svg'
+import './style.scss'
 
 const { ipcRenderer } = window.require('electron')
 
