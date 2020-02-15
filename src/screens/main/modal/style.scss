@@ -48,14 +48,14 @@
     font-weight: bold;
     color: black;
     font-weight: 600;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 }
 
 .slider-wrapper {
   margin-top: 10px;
   position: relative;
-
+  margin-top: 1.5rem;
   .slider-background,
   .slider-fill {
     position: absolute;
@@ -119,7 +119,7 @@
   height: 4vh;
   width: 100%;
   color: black;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   margin-top: 0.2rem;
   .start-label {
