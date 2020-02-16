@@ -1,5 +1,6 @@
 import React from 'react'
 import './style.scss'
+import SignIn from '../../assets/images/google-signIn.jpg'
 const { ipcRenderer } = window.require('electron')
 
 const Login = () => {
@@ -11,7 +12,10 @@ const Login = () => {
   }
   return (
     <div className="login-page">
-      <button className="login-button" onClick={signIn}></button>
+      <div className="image-wrapper">
+        <img src={SignIn} className="sign-in" onClick={signIn} alt="sign-in" />
+      </div>
+      {/* <button className="login-button" onClick={signIn}></button> */}
     </div>
   )
 }
