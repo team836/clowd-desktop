@@ -28,24 +28,67 @@ function setupIpc(login, main, socket, systemVariable) {
   /*
   data
   */
-  ipcMain.on('main-update-data', async (event, arg) => {
-    const ntw = await checkNetwork()
-    const use = await checkFolderSize(LOCALDIR)
-    const disk = await checkDiskSpace(LOCALDIR)
-
+  ipcMain.on('update-data', async (event, arg) => {
+    let [ntw, use, disk] = await Promise.all([
+      checkNetwork(),
+      checkFolderSize(LOCALDIR),
+      checkDiskSpace(LOCALDIR)
+    ])
     systemVariable.folderUsage = use
-    systemVariable.diskFree = disk.free
-    systemVariable.diskSize = disk.size
+    systemVariable.diskFree = (disk.free / 1024 ** 3).toFixed(2)
+    systemVariable.diskSize = (disk.size / 1024 ** 3).toFixed(2)
     systemVariable.bandwidth = ntw.bandwidth
     systemVariable.capacity = Math.min(
       systemVariable.diskFree,
       systemVariable.settingSize - systemVariable.folderUsage
     )
     systemVariable.print()
-    event.reply('main-update-data-res', {
+    let temp = {
       folderUsage: systemVariable.folderUsage,
-      settingSize: systemVariable.settingSize
-    })
+      settingSize: systemVariable.settingSize,
+      folderPercent:
+        (systemVariable.folderUsage / systemVariable.settingSize) * 100,
+      settingPercent: parseInt(
+        (systemVariable.settingSize /
+          (systemVariable.maxSettingSize - systemVariable.minSettingSize)) *
+          100
+      )
+    }
+    event.returnValue = temp
+  })
+  ipcMain.on('data-settingSize', (event, arg) => {
+    systemVariable.settingSize = arg
+    event.returnValue = true
+  })
+
+  ipcMain.on('force-update-data', async (event, arg) => {
+    let [ntw, use, disk] = await Promise.all([
+      checkNetwork(),
+      checkFolderSize(LOCALDIR),
+      checkDiskSpace(LOCALDIR)
+    ])
+    systemVariable.folderUsage = use
+    systemVariable.diskFree = (disk.free / 1024 ** 3).toFixed(2)
+    systemVariable.diskSize = (disk.size / 1024 ** 3).toFixed(2)
+    systemVariable.bandwidth = ntw.bandwidth
+    systemVariable.capacity = Math.min(
+      systemVariable.diskFree,
+      systemVariable.settingSize - systemVariable.folderUsage
+    )
+    systemVariable.print()
+    let temp = {
+      folderUsage: systemVariable.folderUsage,
+      settingSize: systemVariable.settingSize,
+      folderPercent: parseInt(
+        (systemVariable.folderUsage / systemVariable.settingSize) * 100
+      ),
+      settingPercent: parseInt(
+        (systemVariable.settingSize /
+          (systemVariable.maxSettingSize - systemVariable.minSettingSize)) *
+          100
+      )
+    }
+    event.returnValue = temp
   })
   /*
   test function
@@ -65,12 +108,12 @@ function setupIpc(login, main, socket, systemVariable) {
   /*
   sync async example
   */
-  ipcMain.on('asynchronous-message', (event, arg) => {
-    console.log('async ' + arg) // "ping" 출력
-    createLoginWindow()
-    mainWindow.hide()
-    event.reply('asynchronous-reply', 'pong')
-  })
+  // ipcMain.on('asynchronous-message', (event, arg) => {
+  //   console.log('async ' + arg) // "ping" 출력
+  //   createLoginWindow()
+  //   mainWindow.hide()
+  //   event.reply('asynchronous-reply', 'pong')
+  // })
 
   ipcMain.on('synchronous-message', (event, arg) => {
     console.log('sync ' + arg) // "ping" 출력
