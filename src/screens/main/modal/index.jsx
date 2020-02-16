@@ -24,7 +24,7 @@ const Modal = ({ setModalToggle, localSystem, setLocalSystem }) => {
         setIsLoaded(false)
         setTimeout(() => {
           setModalToggle(false)
-        }, 100)
+        }, 200)
       }}
     >
       <div
