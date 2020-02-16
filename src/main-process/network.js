@@ -8,7 +8,7 @@ function checkNetwork() {
       'cmd /c chcp 65001>nul &&netsh wlan show interfaces',
       (error, stdout, stderr) => {
         if (error) {
-          reject(err)
+          reject(error)
         }
         resolve(stdout ? mapOutput(stdout) : stderr)
       }

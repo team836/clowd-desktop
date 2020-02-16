@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import './style.scss'
+import { ReactComponent as Icon } from '../../assets/icons/Union.svg'
 import Granim from 'granim'
 import Modal from './modal'
-import { ReactComponent as Icon } from '../../assets/icons/Union.svg'
+import './style.scss'
 
 const { ipcRenderer } = window.require('electron')
 
 const App = () => {
-  const [value, setValue] = useState(50)
-  const [fillWidthPercent, setFillWidthPercent] = useState(0)
-  const [folderUsage, setFolderUsage] = useState(0)
-  const [settingSize, setSettingSize] = useState(0)
-  const [toggle, setToggle] = useState(false)
+  const [localSystem, setLocalSystem] = useState({})
+  const [modalToggle, setModalToggle] = useState(false)
 
-  ipcRenderer.on('main-update-data-res', (event, arg) => {
-    setFolderUsage(arg.folderUsage)
-    setSettingSize(arg.settingSize)
-    setFillWidthPercent((arg.folderUsage / arg.settingSize) * 100)
-  })
+  const updateSignal = () => {
+    let receive
+    receive = ipcRenderer.sendSync('update-data')
+    setLocalSystem({
+      ...receive
+    })
+  }
+
   useEffect(() => {
-    ipcRenderer.send('main-update-data')
+    updateSignal()
     setInterval(() => {
-      ipcRenderer.send('main-update-data')
+      updateSignal()
     }, 20000)
   }, [])
 
@@ -43,24 +43,30 @@ const App = () => {
 
   return (
     <div id="app">
-      {toggle && <Modal setToggle={setToggle} />}
+      {modalToggle && (
+        <Modal
+          setModalToggle={setModalToggle}
+          localSystem={localSystem}
+          setLocalSystem={setLocalSystem}
+        />
+      )}
       <canvas id="clowd-desktop-background" />
       <h1 className="header">
         <div className="icon-wrapper">
           <Icon
             className="setting-icon"
             alt="setting"
-            onClick={() => setToggle(!toggle)}
+            onClick={() => setModalToggle(!modalToggle)}
           />
         </div>
         <div className="text">
-          <span className="amount">2189</span>
+          <span className="amount">{localSystem.fileCount}</span>
           <span className="unit">Files</span>
         </div>
         <div className="bar-background">
           <div
             className="bar-fill"
-            style={{ width: `${fillWidthPercent}%` }}
+            style={{ width: `${localSystem.folderPercent}%` }}
           ></div>
         </div>
       </h1>

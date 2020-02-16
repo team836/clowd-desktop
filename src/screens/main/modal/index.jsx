@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import './style.scss'
 
-const Modal = ({ setToggle }) => {
-  const [value, setValue] = useState(50)
+const { ipcRenderer } = window.require('electron')
+
+const Modal = ({ setModalToggle, localSystem, setLocalSystem }) => {
+  const [value, setValue] = useState(localSystem.settingSize)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [fillWidthPercent, setFillWidthPercent] = useState(50)
+  const [fillWidthPercent, setFillWidthPercent] = useState(
+    localSystem.settingPercent
+  )
+
   useEffect(() => {
     setIsLoaded(true)
   }, [])
@@ -13,9 +18,12 @@ const Modal = ({ setToggle }) => {
     <div
       className={`modal-wrapper${isLoaded ? ' loaded' : ''}`}
       onClick={(e) => {
+        ipcRenderer.sendSync('data-settingSize', parseInt(value))
+        let receive = ipcRenderer.sendSync('update-data')
+        setLocalSystem(receive)
         setIsLoaded(false)
         setTimeout(() => {
-          setToggle(false)
+          setModalToggle(false)
         }, 200)
       }}
     >
@@ -36,7 +44,7 @@ const Modal = ({ setToggle }) => {
           />
           <input
             type="range"
-            min="0"
+            min="1"
             max="100"
             step="1"
             value={value}
@@ -53,10 +61,10 @@ const Modal = ({ setToggle }) => {
           <div
             className="current-label"
             style={{
+              // left: `${fillWidthPercent}%`
               left: `calc(${26 /
                 10}px + ${fillWidthPercent}% - ${fillWidthPercent /
                 100} * ${26}px)`
-              // left: `calc(${fillWidthPercent}%)`
             }}
           >
             {value}

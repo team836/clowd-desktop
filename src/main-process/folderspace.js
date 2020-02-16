@@ -12,7 +12,7 @@ function checkFolderSize(dir) {
         reject(err)
       }
       // console.log((size / 1024).toFixed(2) + ' KB')
-      resolve(parseFloat(size / 1024)) //return KB
+      resolve(parseFloat((size / 1024 ** 3).toFixed(2))) //return GB
     })
   })
 }
