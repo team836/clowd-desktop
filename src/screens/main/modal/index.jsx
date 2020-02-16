@@ -44,7 +44,7 @@ const Modal = ({ setModalToggle, localSystem, setLocalSystem }) => {
           />
           <input
             type="range"
-            min="0"
+            min="1"
             max="100"
             step="1"
             value={value}

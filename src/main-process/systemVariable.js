@@ -6,6 +6,7 @@ class SystemVariable {
     SystemVariable.instance = this
     this.diskSize = 0 // disk total size GB
     this.diskFree = 0 // disk remain size GB
+    this.fileCount = 0
     this.folderUsage = 0 // folder using size GB
     this.settingSize = 50 // set user total GB
     this.minSettingSize = 0

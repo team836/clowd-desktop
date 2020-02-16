@@ -60,7 +60,7 @@ const App = () => {
           />
         </div>
         <div className="text">
-          <span className="amount">2189</span>
+          <span className="amount">{localSystem.fileCount}</span>
           <span className="unit">Files</span>
         </div>
         <div className="bar-background">
