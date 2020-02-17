@@ -17,7 +17,7 @@ const Login = () => {
         <webview id="webview" src="https://dev.api.clowd.xyz/v1/auth/login" />
       ) : (
         <div>
-          <div className="image-wrapper" onClick={() => setToggle(!toggle)}>
+          <div className="image-wrapper" onClick={signIn}>
             <img src={SignIn} className="sign-in" alt="sign-in" />
           </div>
         </div>

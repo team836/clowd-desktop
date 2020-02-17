@@ -34,7 +34,9 @@ const App = () => {
         'default-state': {
           gradients: [
             ['#834D9B', '#D04ED6'],
-            ['#1CD8D2', '#93EDC7']
+            ['#1CD8D2', '#93EDC7'],
+            ['#1CA7EC', '#1F2F98'],
+            ['#FEB16D', '#E33981']
           ]
         }
       }
