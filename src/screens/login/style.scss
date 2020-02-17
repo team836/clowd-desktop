@@ -1,31 +1,21 @@
 .login-page {
+  height: 100vh;
   display: flex;
   position: relative;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
-  // .login-button {
-  //   background-image: url('../../assets/images/google-signIn.svg');
-  //   background-repeat: no-repeat;
-  //   background-size: 100% 100%;
-  //   width: 200px;
-  //   height: 50px;
-  //   /* border: 1px solid grey; */
-  //   border: none;
-  //   border-radius: 5px;
-  //   box-shadow: 0px 0px 5px gray;
-  //   margin-top: 200px;
-  //   &:hover {
-  //     cursor: pointer;
-  //   }
-  // }
   .image-wrapper {
-    margin-top: 5rem;
     .sign-in {
       width: 172px;
       height: 172px;
       cursor: pointer;
     }
+  }
+
+  #webview {
+    width: 100%;
+    height: 100vh;
+    display: inline-flex;
   }
 }
