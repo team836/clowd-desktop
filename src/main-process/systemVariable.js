@@ -8,7 +8,7 @@ class SystemVariable {
     this.diskFree = 0 // disk remain size GB
     this.fileCount = 0
     this.folderUsage = 0 // folder using size GB
-    this.settingSize = 50 // set user total GB
+    this.settingSize = 2 // set user total GB
     this.minSettingSize = 0
     this.maxSettingSize = 100
     this.capacity = 0 // min(free ,total-usage) GB
