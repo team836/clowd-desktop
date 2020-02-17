@@ -23,7 +23,6 @@ class SystemVariable {
     console.log(`settingSize ${this.settingSize}`)
     console.log(`capacity ${this.capacity}`)
     console.log(`bandwidth ${this.bandwidth}`)
-    console.log('=====================')
   }
 }
 
