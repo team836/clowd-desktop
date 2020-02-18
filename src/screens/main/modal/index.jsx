@@ -18,8 +18,7 @@ const Modal = ({ setModalToggle, localSystem, setLocalSystem }) => {
     <div
       className={`modal-wrapper${isLoaded ? ' loaded' : ''}`}
       onClick={(e) => {
-        ipcRenderer.sendSync('data-settingSize', parseInt(value))
-        let receive = ipcRenderer.sendSync('update-data')
+        let receive = ipcRenderer.sendSync('data-settingSize', parseInt(value))
         setLocalSystem(receive)
         setIsLoaded(false)
         setTimeout(() => {

@@ -8,6 +8,7 @@ const Login = () => {
   ipcRenderer.on('google-signIn-reply', (event, arg) => {
     console.log(arg)
   })
+
   const signIn = () => {
     ipcRenderer.send('google-signIn', 'sign-in')
   }

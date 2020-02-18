@@ -4,11 +4,23 @@ import Granim from 'granim'
 import Modal from './modal'
 import './style.scss'
 
+/*
+fileCount: 135
+folderPercent: 25
+folderUsage: 0.5
+settingPercent: 2
+settingSize: 2
+*/
+
 const { ipcRenderer } = window.require('electron')
 
 const App = () => {
   const [localSystem, setLocalSystem] = useState({})
   const [modalToggle, setModalToggle] = useState(false)
+
+  ipcRenderer.on('test', (event, arg) => {
+    console.log(arg)
+  })
 
   const updateSignal = () => {
     let receive
@@ -33,10 +45,11 @@ const App = () => {
       states: {
         'default-state': {
           gradients: [
-            ['#834D9B', '#D04ED6'],
+            ['#FEB16D', '#E33981'],
+            ['#FFE324', '#FFB553'],
             ['#1CD8D2', '#93EDC7'],
             ['#1CA7EC', '#1F2F98'],
-            ['#FEB16D', '#E33981']
+            ['#834D9B', '#D04ED6']
           ]
         }
       }

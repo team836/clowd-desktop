@@ -1,3 +1,8 @@
+const checkFolderSize = require('./folderspace')
+const checkDiskSpace = require('check-disk-space')
+const checkNetwork = require('./network')
+const checkfileCount = require('./filesCount')
+
 class SystemVariable {
   constructor() {
     if (!!SystemVariable.instance) {
@@ -14,6 +19,31 @@ class SystemVariable {
     this.capacity = 0 // min(free ,total-usage) GB
     this.bandwidth = 0 //fetch from server Mbps
     return this
+  }
+  async checkSystemVariable(LOCALDIR) {
+    let [ntw, use, disk, fileCount] = await Promise.all([
+      checkNetwork(),
+      checkFolderSize(LOCALDIR),
+      checkDiskSpace(LOCALDIR),
+      checkfileCount(LOCALDIR)
+    ])
+    this.folderUsage = use
+    this.diskFree = (disk.free / 1024 ** 3).toFixed(2)
+    this.diskSize = (disk.size / 1024 ** 3).toFixed(2)
+    this.fileCount = fileCount
+    this.bandwidth = ntw.bandwidth
+    this.capacity = Math.min(this.diskFree, this.settingSize - this.folderUsage)
+    this.print()
+    let temp = {
+      folderUsage: this.folderUsage,
+      settingSize: this.settingSize,
+      fileCount: this.fileCount,
+      folderPercent: (this.folderUsage / this.settingSize) * 100,
+      settingPercent: parseInt(
+        (this.settingSize / (this.maxSettingSize - this.minSettingSize)) * 100
+      )
+    }
+    return temp
   }
   print() {
     console.log('=====================')

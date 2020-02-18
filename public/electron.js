@@ -27,7 +27,7 @@ app.on('activate', () => {
 })
 ipcMain.on('google-signIn', (event, arg) => {
   mainWindow = createWindow(mainWindow)
-  socket = setupSocket(systemVariable)
+  socket = setupSocket(systemVariable, mainWindow)
   setupIpc(loginWindow, mainWindow, socket, systemVariable)
   loginWindow.hide()
   event.reply('google-signIn-reply', 'ok')
