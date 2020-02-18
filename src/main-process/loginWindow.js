@@ -5,14 +5,15 @@ const isDev = require('electron-is-dev')
 function createLoginWindow(browser) {
   browser = new BrowserWindow({
     title: 'login',
-    width: 300,
-    height: 400,
-    minWidth: 300,
-    minHeight: 400,
-    maxWidth: 300,
-    maxHeight: 400,
+    width: 370,
+    height: 490,
+    minWidth: 370,
+    minHeight: 490,
+    maxWidth: 600,
+    maxHeight: 800,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      webviewTag: true
     }
   })
 
@@ -23,6 +24,7 @@ function createLoginWindow(browser) {
   )
 
   browser.on('closed', () => (browser = null))
+  browser.setMenuBarVisibility(false)
 
   return browser
 }
