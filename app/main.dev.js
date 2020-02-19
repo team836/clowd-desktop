@@ -10,10 +10,10 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import MenuBuilder from './menu';
+// import MenuBuilder from './menu';
 
 export default class AppUpdater {
   constructor() {
@@ -24,6 +24,7 @@ export default class AppUpdater {
 }
 
 let mainWindow = null;
+let authWindow = null;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -84,14 +85,95 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
+  mainWindow.setMenuBarVisibility(false);
+  // const menuBuilder = new MenuBuilder(mainWindow);
+  // menuBuilder.buildMenu();
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
-  new AppUpdater();
+  // new AppUpdater();
 };
 
+const createAuthWindow = async upper => {
+  if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.DEBUG_PROD === 'true'
+  ) {
+    await installExtensions();
+  }
+
+  authWindow = new BrowserWindow({
+    show: false,
+    width: 1024,
+    height: 728,
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
+
+  authWindow.loadURL('https://dev.api.clowd.xyz/v1/auth/clowder/login');
+
+  // @TODO: Use 'ready-to-show' event
+  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
+  authWindow.webContents.on('did-finish-load', () => {
+    if (!authWindow) {
+      throw new Error('"mainWindow" is not defined');
+    }
+    if (process.env.START_MINIMIZED) {
+      authWindow.minimize();
+    } else {
+      authWindow.show();
+      authWindow.focus();
+    }
+  });
+
+  authWindow.on('closed', () => {
+    authWindow = null;
+  });
+
+  authWindow.setMenuBarVisibility(false);
+
+  authWindow.webContents.on('did-navigate', async function income() {
+    const token = await authWindow.webContents
+      .executeJavaScript(`document.querySelector('pre').innerText`, true)
+      .then(result => {
+        // console.log(result); // Will be the JSON object from the fetch call
+        authWindow.close();
+        return result;
+      })
+      .catch(() => {
+        return null;
+      });
+    if (token !== null) {
+      upper.webContents.send('sign-in', JSON.parse(token));
+    }
+    // More complex code to handle tokens goes here
+  });
+
+  authWindow.webContents.on('will-navigate', async function income() {
+    const token = await authWindow.webContents
+      .executeJavaScript(`document.querySelector('pre').innerText`, true)
+      .then(result => {
+        // console.log(result); // Will be the JSON object from the fetch call
+        authWindow.close();
+        return result;
+      })
+      .catch(() => {
+        return null;
+      });
+    if (token !== null) {
+      console.log(JSON.parse(token).accessToken);
+    }
+    // More complex code to handle tokens goes here
+  });
+
+  // const menuBuilder = new MenuBuilder(authWindow);
+  // menuBuilder.buildMenu();
+
+  // Remove this if your app does not use auto updates
+  // eslint-disable-next-line
+  // new AppUpdater();
+};
 /**
  * Add event listeners...
  */
@@ -110,4 +192,8 @@ app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
+});
+
+ipcMain.on('google-signIn', () => {
+  createAuthWindow(mainWindow);
 });

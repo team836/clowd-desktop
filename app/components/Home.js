@@ -10,6 +10,10 @@ const { ipcRenderer } = window.require('electron');
 export default function Home() {
   const buttonFocus = useRef();
 
+  ipcRenderer.on('sign-in', (event, arg) => {
+    console.log(arg);
+  });
+
   const handleClick = () => {
     ipcRenderer.send('google-signIn', 'sign-in');
   };
