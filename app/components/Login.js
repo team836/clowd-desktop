@@ -12,7 +12,7 @@ export default function Login() {
   const [authSuccess, setAuthSuccess] = useState(false);
 
   if (authSuccess) {
-    return <Redirect to={routes.COUNTER} />;
+    return <Redirect to={routes.DASHBOARD} />;
   }
   ipcRenderer.on('sign-in', () => {
     // console.log(arg);
