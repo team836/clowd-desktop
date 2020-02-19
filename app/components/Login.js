@@ -2,12 +2,12 @@
 import React, { useRef, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import routes from '../constants/routes.json';
-import styles from './Home.css';
+import styles from './Login.css';
 import SignIn from '../../resources/google-signIn.jpg';
 
 const { ipcRenderer } = window.require('electron');
 
-export default function Home() {
+export default function Login() {
   const buttonFocus = useRef();
   const [authSuccess, setAuthSuccess] = useState(false);
 
