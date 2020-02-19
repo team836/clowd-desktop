@@ -1,7 +1,7 @@
 // @flow
-import React, { useRef } from 'react';
-// import { Link } from 'react-router-dom';
-// import routes from '../constants/routes.json';
+import React, { useRef, useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import routes from '../constants/routes.json';
 import styles from './Home.css';
 import SignIn from '../../resources/google-signIn.jpg';
 
@@ -9,9 +9,14 @@ const { ipcRenderer } = window.require('electron');
 
 export default function Home() {
   const buttonFocus = useRef();
+  const [authSuccess, setAuthSuccess] = useState(false);
 
-  ipcRenderer.on('sign-in', (event, arg) => {
-    console.log(arg);
+  if (authSuccess) {
+    return <Redirect to={routes.COUNTER} />;
+  }
+  ipcRenderer.on('sign-in', () => {
+    // console.log(arg);
+    setAuthSuccess(true);
   });
 
   const handleClick = () => {
@@ -34,7 +39,6 @@ export default function Home() {
       >
         <img src={SignIn} className="sign-in" alt="sign-in" />
       </div>
-      {/* <Link to={routes.COUNTER}>to Counter</Link> */}
     </div>
   );
 }
