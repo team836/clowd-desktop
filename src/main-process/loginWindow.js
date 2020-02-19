@@ -26,6 +26,7 @@ function createLoginWindow(browser) {
   browser.on('closed', () => (browser = null))
   browser.setMenuBarVisibility(false)
 
+  console.log(browser.webContents.id)
   return browser
 }
 

@@ -15,7 +15,10 @@ const Login = () => {
   return (
     <div className="login-page">
       {toggle ? (
-        <webview id="webview" src="https://dev.api.clowd.xyz/v1/auth/login" />
+        <webview
+          id="webview"
+          src="https://dev.api.clowd.xyz/v1/auth/clowder/login"
+        />
       ) : (
         <div>
           <div className="image-wrapper" onClick={signIn}>
