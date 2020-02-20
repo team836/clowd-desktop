@@ -1,9 +1,14 @@
-class SystemVariable {
+import checkDiskSpace from './checkDiskSpace';
+import checkFileCount from './checkFileCount';
+import checkFolderUsage from './checkFolderUsage';
+import checkNetworkState from './checkNetworkState';
+
+class Variable {
   constructor() {
-    if (SystemVariable.instance) {
-      return SystemVariable.instance;
+    if (Variable.instance) {
+      return Variable.instance;
     }
-    SystemVariable.instance = this;
+    Variable.instance = this;
     this.diskSize = 0; // disk total size GB
     this.diskFree = 0; // disk remain size GB
     this.fileCount = 0;
@@ -16,10 +21,42 @@ class SystemVariable {
     return this;
   }
 
+  async checkSystemVariable(FOLDERPATH) {
+    const [disk, folder, fileCount, ntw] = await Promise.all([
+      checkDiskSpace(FOLDERPATH),
+      checkFolderUsage(FOLDERPATH),
+      checkFileCount(FOLDERPATH),
+      checkNetworkState()
+    ]);
+
+    this.diskFree = (disk.free / 1024 ** 3).toFixed(2);
+    this.diskSize = (disk.size / 1024 ** 3).toFixed(2);
+    this.folderUsage = (folder / 1024 ** 3).toFixed(2);
+    this.fileCount = fileCount;
+    this.bandwidth = ntw.bandwidth;
+    this.capacity = Math.min(
+      this.diskFree,
+      this.settingSize - this.folderUsage
+    );
+    const temp = {
+      folderUsage: this.folderUsage,
+      settingSize: this.settingSize,
+      fileCount: this.fileCount,
+      folderPercent: (this.folderUsage / this.settingSize) * 100,
+      settingPercent: parseInt(
+        (this.settingSize / (this.maxSettingSize - this.minSettingSize)) * 100,
+        10
+      )
+    };
+
+    return temp;
+  }
+
   print() {
     console.log('=====================');
     console.log(`diskSize ${this.diskSize}`);
     console.log(`diskFree ${this.diskFree}`);
+    console.log(`fileCount ${this.fileCount}`);
     console.log(`folderUsage ${this.folderUsage}`);
     console.log(`settingSize ${this.settingSize}`);
     console.log(`capacity ${this.capacity}`);
@@ -27,4 +64,4 @@ class SystemVariable {
   }
 }
 
-module.exports = { SystemVariable };
+module.exports = { Variable };
