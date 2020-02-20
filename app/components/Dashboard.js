@@ -5,9 +5,23 @@ import Modal from './Modal';
 import Icon from '../../resources/icons/Setting.svg';
 import styles from './Dashboard.css';
 
+const { ipcRenderer } = window.require('electron');
+
 export default function Dashboard() {
   const [localSystem, setLocalSystem] = useState({});
   const [modalToggle, setModalToggle] = useState(false);
+
+  const updateSignal = () => {
+    const res = ipcRenderer.sendSync('data-update-signal', 'aa');
+    console.log(res);
+  };
+
+  useEffect(() => {
+    updateSignal();
+    setInterval(() => {
+      updateSignal();
+    }, 20000);
+  }, []);
 
   useEffect(() => {
     // eslint-disable-next-line no-unused-vars

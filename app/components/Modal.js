@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Modal.css';
 
+// const { ipcRenderer } = window.require('electron');
+// localSystem, setLocalSystem
 // eslint-disable-next-line react/prop-types
 export default function Modal({ setModalToggle }) {
   // eslint-disable-next-line react/prop-types
