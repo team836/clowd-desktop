@@ -2,19 +2,17 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Modal.css';
 
-// const { ipcRenderer } = window.require('electron');
-// localSystem, setLocalSystem
+const { ipcRenderer } = window.require('electron');
+
 // eslint-disable-next-line react/prop-types
-export default function Modal({ setModalToggle }) {
+export default function Modal({ setModalToggle, localSystem, setLocalSystem }) {
   // eslint-disable-next-line react/prop-types
-  // const [value, setValue] = useState(localSystem.settingSize);
-  const [value, setValue] = useState(50);
+  const [value, setValue] = useState(localSystem.settingSize);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [fillWidthPercent, setFillWidthPercent] = useState(50);
-  // const [fillWidthPercent, setFillWidthPercent] = useState(
-  //   // eslint-disable-next-line react/prop-types
-  //   localSystem.settingPercent
-  // );
+  const [fillWidthPercent, setFillWidthPercent] = useState(
+    // eslint-disable-next-line react/prop-types
+    localSystem.settingPercent
+  );
 
   useEffect(() => {
     setIsLoaded(true);
@@ -33,11 +31,11 @@ export default function Modal({ setModalToggle }) {
       tabIndex={0}
       onKeyDown={handleKeyDown}
       onClick={() => {
-        // const receive = ipcRenderer.sendSync(
-        //   'data-settingSize',
-        //   parseInt(value, 10)
-        // );
-        // setLocalSystem(receive);
+        const receive = ipcRenderer.sendSync(
+          'data-settingSize',
+          parseInt(value, 10)
+        );
+        setLocalSystem(receive);
         setIsLoaded(false);
         setTimeout(() => {
           setModalToggle(false);

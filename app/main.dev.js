@@ -205,10 +205,15 @@ ipcMain.on('google-signIn', () => {
   createAuthWindow(mainWindow);
 });
 
-ipcMain.on('data-update-signal', (event, arg) => {
-  console.log(arg);
-  state.print();
-  state.checkSystemVariable(FOLDERPATH);
+ipcMain.on('data-update-signal', async event => {
+  const obj = await state.checkSystemVariable(FOLDERPATH);
   // eslint-disable-next-line no-param-reassign
-  event.returnValue = 'ok';
+  event.returnValue = obj;
+});
+
+ipcMain.on('data-settingSize', async (event, arg) => {
+  state.settingSize = arg;
+  const obj = await state.checkSystemVariable(FOLDERPATH);
+  // eslint-disable-next-line no-param-reassign
+  event.returnValue = obj;
 });

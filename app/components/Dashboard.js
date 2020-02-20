@@ -12,8 +12,10 @@ export default function Dashboard() {
   const [modalToggle, setModalToggle] = useState(false);
 
   const updateSignal = () => {
-    const res = ipcRenderer.sendSync('data-update-signal', 'aa');
-    console.log(res);
+    const res = ipcRenderer.sendSync('data-update-signal');
+    setLocalSystem({
+      ...res
+    });
   };
 
   useEffect(() => {
@@ -65,7 +67,7 @@ export default function Dashboard() {
         </button>
 
         <div className={styles.text}>
-          <span className={styles.amount}>512</span>
+          <span className={styles.amount}>{localSystem.fileCount}</span>
           <span className={styles.unit}>Files</span>
         </div>
         <div className={styles.barBackground}>
