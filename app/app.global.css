@@ -3,7 +3,7 @@
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
 
-/* @import '~@fortawesome/fontawesome-free/css/all.css'; */
+@import '~@fortawesome/fontawesome-free/css/all.css';
 @import './assets/styles/css/fonts.css';
 
 html {
@@ -23,7 +23,7 @@ body {
   ); */
 
   /* font-family: Arial, Helvetica, Helvetica Neue, serif; */
-  font-family: 'PAYW Pro', 'PAYW Pro KR', sans-serif;
+  font-family: 'PAYW Pro', sans-serif;
   overflow-y: hidden;
 }
 
