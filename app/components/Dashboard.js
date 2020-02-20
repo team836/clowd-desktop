@@ -18,6 +18,16 @@ export default function Dashboard() {
     });
   };
 
+  ipcRenderer.on('file-update', (event, arg) => {
+    setLocalSystem({
+      ...arg
+    });
+  });
+
+  useEffect(() => {
+    ipcRenderer.send('socket-setup');
+  }, []);
+
   useEffect(() => {
     updateSignal();
     setInterval(() => {

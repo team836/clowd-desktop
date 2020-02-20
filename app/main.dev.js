@@ -15,6 +15,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import State from './main-process/state';
 import { FOLDERPATH } from './constants/path';
+import { setupSocket } from './main-process/webSocket';
 // import MenuBuilder from './menu';
 
 export default class AppUpdater {
@@ -205,8 +206,13 @@ ipcMain.on('google-signIn', () => {
   createAuthWindow(mainWindow);
 });
 
+ipcMain.on('socket-setup', () => {
+  setupSocket(state, mainWindow);
+});
+
 ipcMain.on('data-update-signal', async event => {
   const obj = await state.checkSystemVariable(FOLDERPATH);
+  console.log(obj);
   // eslint-disable-next-line no-param-reassign
   event.returnValue = obj;
 });
