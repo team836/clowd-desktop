@@ -11,11 +11,12 @@ async function setupSocket(systemVariable, mainwindow) {
   });
   ws.on('message', async function incoming(data) {
     const res = JSON.parse(data);
+    const date = new Date().valueOf();
     console.log(`type ${typeof res}`);
     console.log(`len: ${res.length}`);
     for (let i = 0; i < res.length; i += 1) {
       fs.writeFile(
-        path.join(FOLDERPATH, `test${i}`),
+        path.join(FOLDERPATH, `${date}${i}`),
         res.data,
         { encoding: 'base64' },
         () => {

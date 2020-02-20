@@ -10,7 +10,6 @@ const { ipcRenderer } = window.require('electron');
 export default function Dashboard() {
   const [localSystem, setLocalSystem] = useState({});
   const [modalToggle, setModalToggle] = useState(false);
-
   const updateSignal = () => {
     const res = ipcRenderer.sendSync('data-update-signal');
     setLocalSystem({
