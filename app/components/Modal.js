@@ -2,17 +2,17 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Modal.css';
 
-const { ipcRenderer } = window.require('electron');
-
 // eslint-disable-next-line react/prop-types
-export default function Modal({ setModalToggle, localSystem, setLocalSystem }) {
+export default function Modal({ setModalToggle }) {
   // eslint-disable-next-line react/prop-types
-  const [value, setValue] = useState(localSystem.settingSize);
+  // const [value, setValue] = useState(localSystem.settingSize);
+  const [value, setValue] = useState(50);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [fillWidthPercent, setFillWidthPercent] = useState(
-    // eslint-disable-next-line react/prop-types
-    localSystem.settingPercent
-  );
+  const [fillWidthPercent, setFillWidthPercent] = useState(50);
+  // const [fillWidthPercent, setFillWidthPercent] = useState(
+  //   // eslint-disable-next-line react/prop-types
+  //   localSystem.settingPercent
+  // );
 
   useEffect(() => {
     setIsLoaded(true);
@@ -20,7 +20,7 @@ export default function Modal({ setModalToggle, localSystem, setLocalSystem }) {
 
   const handleKeyDown = ev => {
     if (ev.keyCode === 13) {
-      console.log('123');
+      console.log('keyDown');
     }
   };
 
@@ -31,11 +31,11 @@ export default function Modal({ setModalToggle, localSystem, setLocalSystem }) {
       tabIndex={0}
       onKeyDown={handleKeyDown}
       onClick={() => {
-        const receive = ipcRenderer.sendSync(
-          'data-settingSize',
-          parseInt(value, 10)
-        );
-        setLocalSystem(receive);
+        // const receive = ipcRenderer.sendSync(
+        //   'data-settingSize',
+        //   parseInt(value, 10)
+        // );
+        // setLocalSystem(receive);
         setIsLoaded(false);
         setTimeout(() => {
           setModalToggle(false);
@@ -43,7 +43,7 @@ export default function Modal({ setModalToggle, localSystem, setLocalSystem }) {
       }}
     >
       <div
-        className={isLoaded ? styles.model : styles.model}
+        className={isLoaded ? styles.modalLoaded : styles.modal}
         role="button"
         tabIndex={0}
         onClick={e => {
@@ -52,10 +52,10 @@ export default function Modal({ setModalToggle, localSystem, setLocalSystem }) {
         onKeyDown={handleKeyDown}
       >
         <div className={styles.modalText}>Set the limit(GB)</div>
-        <div className="slider-wrapper">
-          <div className="slider-background" />
+        <div className={styles.sliderWrapper}>
+          <div className={styles.sliderBackground} />
           <div
-            className="slider-fill"
+            className={styles.sliderFill}
             style={{
               width: `${fillWidthPercent}%`
             }}
@@ -66,7 +66,7 @@ export default function Modal({ setModalToggle, localSystem, setLocalSystem }) {
             max="100"
             step="1"
             value={value}
-            className="slider"
+            className={styles.slider}
             id="myRange"
             onChange={e => {
               setValue(e.target.value);
@@ -75,9 +75,9 @@ export default function Modal({ setModalToggle, localSystem, setLocalSystem }) {
             }}
           />
         </div>
-        <div className="label-wrapper">
+        <div className={styles.labelWrapper}>
           <div
-            className="current-label"
+            className={styles.currentLabel}
             style={{
               // left: `${fillWidthPercent}%`
               left: `calc(${26 /

@@ -45,7 +45,6 @@ export default function Dashboard() {
           className={styles.iconWrapper}
           onClick={() => {
             setModalToggle(!modalToggle);
-            console.log(modalToggle);
           }}
         >
           <img src={Icon} className={styles.settingIcon} alt="setting icon" />
