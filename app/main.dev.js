@@ -13,7 +13,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import { SystemVariable } from './main-process/systemVariable';
+import State from './main-process/state';
+import { FOLDERPATH } from './constants/path';
 // import MenuBuilder from './menu';
 
 export default class AppUpdater {
@@ -26,7 +27,7 @@ export default class AppUpdater {
 
 let mainWindow = null;
 let authWindow = null;
-const systemVariable = new SystemVariable();
+const state = new State();
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -206,7 +207,8 @@ ipcMain.on('google-signIn', () => {
 
 ipcMain.on('data-update-signal', (event, arg) => {
   console.log(arg);
-  systemVariable.print();
+  state.print();
+  state.checkSystemVariable(FOLDERPATH);
   // eslint-disable-next-line no-param-reassign
   event.returnValue = 'ok';
 });
