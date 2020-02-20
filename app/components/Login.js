@@ -14,7 +14,7 @@ export default function Login() {
   if (authSuccess) {
     return <Redirect to={routes.DASHBOARD} />;
   }
-  ipcRenderer.on('sign-in', () => {
+  ipcRenderer.on('sign-in-ok', () => {
     // console.log(arg);
     setAuthSuccess(true);
   });

@@ -1,37 +1,80 @@
-.backButton {
-  position: absolute;
+.dashboard {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.counter {
-  position: absolute;
-  top: 30%;
-  left: 45%;
-  font-size: 10rem;
-  font-weight: bold;
-  letter-spacing: -0.025em;
+.canvasStyle {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.btnGroup {
-  position: relative;
-  top: 500px;
-  width: 480px;
-  margin: 0 auto;
+.header {
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
 }
 
-.btn {
-  font-size: 1.6rem;
-  font-weight: bold;
-  background-color: #fff;
-  border-radius: 50%;
-  margin: 10px;
-  width: 100px;
-  height: 100px;
-  opacity: 0.7;
+.iconWrapper {
+  position: fixed;
   cursor: pointer;
-  font-family: Arial, Helvetica, Helvetica Neue, sans-serif;
+  top: 1rem;
+  right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border: 0;
+  background: transparent;
+  outline: none;
 }
 
-.btn:hover {
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5);
+.settingIcon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.text {
+  font-size: 15vw;
+  line-height: 0.5;
+}
+.amount {
+  font-size: 15vw;
+  letter-spacing: -0.03em;
+}
+.unit {
+  font-size: 7vw;
+}
+
+.barBackground {
+  /* position: fixed; */
+  background-color: rgba(255, 255, 255, 0.3);
+  mix-blend-mode: overlay;
+  width: 60%;
+  height: 0.5rem;
+  border-radius: 50px;
+  margin-top: 3rem;
+}
+.barFill {
+  width: auto;
+  height: 0.5rem;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.7);
 }

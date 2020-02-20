@@ -104,8 +104,12 @@ const createAuthWindow = async upper => {
 
   authWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 400,
+    height: 540,
+    minWidth: 400,
+    minHeight: 540,
+    maxWidth: 600,
+    maxHeight: 800,
     webPreferences: {
       nodeIntegration: true
     }
@@ -145,7 +149,7 @@ const createAuthWindow = async upper => {
         return null;
       });
     if (token !== null) {
-      upper.webContents.send('sign-in', JSON.parse(token));
+      upper.webContents.send('sign-in-ok', JSON.parse(token));
     }
     // More complex code to handle tokens goes here
   });

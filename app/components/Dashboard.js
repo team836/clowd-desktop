@@ -1,73 +1,67 @@
 // @flow
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import Granim from 'granim';
+import Modal from './Modal';
+import Icon from '../../resources/icons/Setting.svg';
 import styles from './Dashboard.css';
-import routes from '../constants/routes.json';
 
-type Props = {
-  increment: () => void,
-  incrementIfOdd: () => void,
-  incrementAsync: () => void,
-  decrement: () => void,
-  counter: number
-};
+export default function Dashboard() {
+  const [localSystem, setLocalSystem] = useState({});
+  const [modalToggle, setModalToggle] = useState(false);
 
-export default class Dashboard extends Component<Props> {
-  props: Props;
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-vars
+    const granimInstance = new Granim({
+      element: '#clowd-desktop-background',
+      name: 'granim',
+      opacity: [1, 1],
+      states: {
+        'default-state': {
+          gradients: [
+            ['#FEB16D', '#E33981'],
+            ['#FFE324', '#FFB553'],
+            ['#1CD8D2', '#93EDC7'],
+            ['#1CA7EC', '#1F2F98'],
+            ['#834D9B', '#D04ED6']
+          ]
+        }
+      }
+    });
+  }, []);
+  return (
+    <div className={styles.dashboard}>
+      {modalToggle && (
+        <Modal
+          setModalToggle={setModalToggle}
+          localSystem={localSystem}
+          setLocalSystem={setLocalSystem}
+        />
+      )}
 
-  render() {
-    const {
-      increment,
-      incrementIfOdd,
-      incrementAsync,
-      decrement,
-      counter
-    } = this.props;
-    return (
-      <div>
-        <div className={styles.backButton} data-tid="backButton">
-          <Link to={routes.HOME}>
-            <i className="fa fa-arrow-left fa-3x" />
-          </Link>
+      <canvas id="clowd-desktop-background" className={styles.canvasStyle} />
+      <h1 className={styles.header}>
+        <button
+          type="button"
+          className={styles.iconWrapper}
+          onClick={() => {
+            setModalToggle(!modalToggle);
+            console.log(modalToggle);
+          }}
+        >
+          <img src={Icon} className={styles.settingIcon} alt="setting icon" />
+        </button>
+
+        <div className={styles.text}>
+          <span className={styles.amount}>512</span>
+          <span className={styles.unit}>Files</span>
         </div>
-        <div className={`counter ${styles.counter}`} data-tid="counter">
-          {counter}
+        <div className={styles.barBackground}>
+          <div
+            className={styles.barFill}
+            style={{ width: `${localSystem.folderPercent}%` }}
+          />
         </div>
-        <div className={styles.btnGroup}>
-          <button
-            className={styles.btn}
-            onClick={increment}
-            data-tclass="btn"
-            type="button"
-          >
-            <i className="fa fa-plus" />
-          </button>
-          <button
-            className={styles.btn}
-            onClick={decrement}
-            data-tclass="btn"
-            type="button"
-          >
-            <i className="fa fa-minus" />
-          </button>
-          <button
-            className={styles.btn}
-            onClick={incrementIfOdd}
-            data-tclass="btn"
-            type="button"
-          >
-            odd
-          </button>
-          <button
-            className={styles.btn}
-            onClick={() => incrementAsync()}
-            data-tclass="btn"
-            type="button"
-          >
-            async
-          </button>
-        </div>
-      </div>
-    );
-  }
+      </h1>
+    </div>
+  );
 }
