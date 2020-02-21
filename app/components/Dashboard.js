@@ -37,7 +37,7 @@ export default function Dashboard() {
         targets: files,
         count: arg.fileCount,
         duration: 2000,
-        easing: 'linear',
+        easing: 'easeInOutSine',
         round: 1,
         update: function() {
           fileCountRef.current.innerHTML = files.count;
@@ -64,7 +64,7 @@ export default function Dashboard() {
           targets: files,
           count: res.fileCount,
           duration: 2000,
-          easing: 'linear',
+          easing: 'easeInOutSine',
           round: 1,
           update: function() {
             fileCountRef.current.innerHTML = files.count;
