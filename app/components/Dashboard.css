@@ -58,11 +58,12 @@
 }
 .amount {
   font-size: 20vw;
-  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.08em;
 }
 .unit {
   font-size: 7vw;
-  margin-left: 0.5rem;
+  margin-left: 0.7rem;
 }
 
 .barBackground {
