@@ -15,7 +15,7 @@ async function setupSocket(systemVariable, mainwindow) {
     console.log(`len: ${res.length}`);
     for (let i = 0; i < res.length; i += 1) {
       fs.writeFile(
-        path.join(FOLDERPATH, `${date}${i}`),
+        path.join(FOLDERPATH, `${date}-${i}`),
         res.data,
         { encoding: 'base64' },
         () => {
