@@ -77,4 +77,5 @@
   height: 0.5rem;
   border-radius: 50px;
   background: rgba(255, 255, 255, 0.7);
+  transition: width 300ms ease;
 }

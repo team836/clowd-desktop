@@ -218,16 +218,16 @@ ipcMain.on('socket-setup', () => {
   setupSocket(state, mainWindow);
 });
 
-ipcMain.on('data-update-signal', async event => {
+// eslint-disable-next-line no-unused-vars
+ipcMain.handle('data-update-signal', async (event, arg) => {
   const obj = await state.checkSystemVariable(FOLDERPATH);
   console.log(obj);
-  // eslint-disable-next-line no-param-reassign
-  event.returnValue = obj;
+  return obj;
 });
 
-ipcMain.on('data-settingSize', async (event, arg) => {
+ipcMain.handle('data-settingSize', async (event, arg) => {
   state.settingSize = arg;
   const obj = await state.checkSystemVariable(FOLDERPATH);
   // eslint-disable-next-line no-param-reassign
-  event.returnValue = obj;
+  return obj;
 });

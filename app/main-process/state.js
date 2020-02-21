@@ -42,13 +42,11 @@ class State {
       folderUsage: this.folderUsage,
       settingSize: this.settingSize,
       fileCount: this.fileCount,
-      folderPercent: (this.folderUsage / this.settingSize) * 100,
-      settingPercent: parseInt(
-        (this.settingSize / (this.maxSettingSize - this.minSettingSize)) * 100,
-        10
+      folderPercent: Math.round((this.folderUsage / this.settingSize) * 100),
+      settingPercent: Math.round(
+        (this.settingSize / (this.maxSettingSize - this.minSettingSize)) * 100
       )
     };
-
     return temp;
   }
 
