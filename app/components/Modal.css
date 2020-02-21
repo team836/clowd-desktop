@@ -11,7 +11,7 @@
   outline: none;
   z-index: 10;
   opacity: 1;
-  transition: opacity 300ms ease;
+  transition: opacity 200ms ease;
 }
 
 .modelWrapper {
@@ -27,7 +27,7 @@
   outline: none;
   z-index: 10;
   opacity: 0;
-  transition: opacity 300ms ease;
+  transition: opacity 200ms ease;
 }
 
 .modal {
@@ -42,7 +42,7 @@
   box-sizing: border-box;
   border-radius: 10px;
   transform: translateY(1rem);
-  transition: transform 300ms ease;
+  transition: transform 200ms ease;
 }
 .modalLoaded {
   z-index: 11;
@@ -56,7 +56,7 @@
   box-sizing: border-box;
   border-radius: 10px;
   transform: translateY(1rem);
-  transition: transform 300ms ease;
+  transition: transform 200ms ease;
 }
 .modalText {
   font-weight: bold;

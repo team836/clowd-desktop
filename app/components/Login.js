@@ -14,13 +14,14 @@ export default function Login() {
   if (authSuccess) {
     return <Redirect to={routes.DASHBOARD} />;
   }
-  ipcRenderer.on('sign-in-ok', () => {
-    // console.log(arg);
-    setAuthSuccess(true);
+  ipcRenderer.on('sign-in-ok', (event, arg) => {
+    console.log(arg); // get token
+    setAuthSuccess(true); // go to dashboard
   });
 
   const handleClick = () => {
-    ipcRenderer.send('google-signIn', 'sign-in');
+    setAuthSuccess(true); // direct to dashboard
+    // ipcRenderer.send('google-signIn', 'sign-in'); // make auth window
   };
   const handleKeyDown = ev => {
     if (ev.keyCode === 13) {
