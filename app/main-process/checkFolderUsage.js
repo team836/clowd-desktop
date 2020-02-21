@@ -11,7 +11,7 @@ function checkFolderSize(dir) {
       if (err) {
         reject(err);
       }
-      resolve(parseInt(size, 10)); // return Byte
+      resolve(size); // return Byte
     });
   });
 }
