@@ -27,6 +27,12 @@ export default function Dashboard() {
       setLocalSystem({
         ...arg
       });
+      if (process.platform === 'darwin') {
+        arg.fileCount -= 1;
+        if (arg.fileCount < 0) {
+          arg.fileCount = 0;
+        }
+      }
       anime({
         targets: files,
         count: arg.fileCount,
@@ -48,6 +54,12 @@ export default function Dashboard() {
         setLocalSystem({
           ...res
         });
+        if (process.platform === 'darwin') {
+          res.fileCount -= 1;
+          if (res.fileCount < 0) {
+            res.fileCount = 0;
+          }
+        }
         anime({
           targets: files,
           count: res.fileCount,
