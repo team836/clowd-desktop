@@ -11,11 +11,13 @@ export default function Dashboard() {
   const [localSystem, setLocalSystem] = useState({});
   const [modalToggle, setModalToggle] = useState(false);
 
+  useEffect(() => {
   ipcRenderer.on('file-update', (event, arg) => {
     setLocalSystem({
       ...arg
     });
   });
+  }, []);
 
   const updateSignal = () => {
     ipcRenderer
