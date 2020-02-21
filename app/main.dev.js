@@ -122,7 +122,9 @@ const createAuthWindow = async upper => {
     }
   });
 
-  authWindow.loadURL('https://dev.api.clowd.xyz/v1/auth/clowder/login');
+  authWindow.loadURL('https://dev.api.clowd.xyz/v1/auth/clowder/login', {
+    userAgent: 'Chrome'
+  });
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
@@ -218,6 +220,9 @@ ipcMain.on('socket-setup', () => {
   setupSocket(state, mainWindow);
 });
 
+ipcMain.on('check-network', () => {
+  state.checkNetwork();
+});
 // eslint-disable-next-line no-unused-vars
 ipcMain.handle('data-update-signal', async (event, arg) => {
   const obj = await state.checkSystemVariable(FOLDERPATH);

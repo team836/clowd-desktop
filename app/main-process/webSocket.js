@@ -1,10 +1,12 @@
 import WebSocket from 'ws';
 import path from 'path';
 import fs from 'fs';
+import { machineId, machineIdSync } from 'node-machine-id';
 import { SOCKETSERVER, FOLDERPATH } from '../constants/path';
 
 async function setupSocket(systemVariable, mainwindow) {
-  const ws = new WebSocket(SOCKETSERVER);
+  let mid = machineIdSync();
+  const ws = new WebSocket(`${SOCKETSERVER}?mid=${mid}`);
   ws.on('open', function open() {
     // ws.send('something')
   });
@@ -15,7 +17,7 @@ async function setupSocket(systemVariable, mainwindow) {
     console.log(`len: ${res.length}`);
     for (let i = 0; i < res.length; i += 1) {
       fs.writeFile(
-        path.join(FOLDERPATH, `${date}${i}`),
+        path.join(FOLDERPATH, `${date}-${i}`),
         res.data,
         { encoding: 'base64' },
         () => {
