@@ -11,9 +11,28 @@ export default function Dashboard() {
   const [localSystem, setLocalSystem] = useState({});
   const [modalToggle, setModalToggle] = useState(false);
 
-  ipcRenderer.on('file-update', (event, arg) => {
-    setLocalSystem({
-      ...arg
+  useEffect(() => {
+    ipcRenderer.on('file-update', (event, arg) => {
+      setLocalSystem({
+        ...arg
+      });
+      if (process.platform === 'darwin') {
+        arg.fileCount -= 1;
+        if (arg.fileCount < 0) {
+          arg.fileCount = 0;
+        }
+      }
+      anime({
+        targets: files,
+        count: arg.fileCount,
+        duration: 2000,
+        easing: 'linear',
+        round: 1,
+        update: function() {
+          fileCountRef.current.innerHTML = files.count;
+          setFiles(files);
+        }
+      });
     });
   });
 
@@ -23,6 +42,23 @@ export default function Dashboard() {
       .then(res => {
         setLocalSystem({
           ...res
+        });
+        if (process.platform === 'darwin') {
+          res.fileCount -= 1;
+          if (res.fileCount < 0) {
+            res.fileCount = 0;
+          }
+        }
+        anime({
+          targets: files,
+          count: res.fileCount,
+          duration: 2000,
+          easing: 'linear',
+          round: 1,
+          update: function() {
+            fileCountRef.current.innerHTML = files.count;
+            setFiles(files);
+          }
         });
         return res;
       })
