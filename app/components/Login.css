@@ -1,0 +1,17 @@
+.loginpage {
+  height: 100vh;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.imageWrapper {
+  cursor: pointer;
+}
+
+img {
+  width: 172px;
+  height: 172px;
+  cursor: pointer;
+}
