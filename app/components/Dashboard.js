@@ -1,22 +1,44 @@
 // @flow
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Granim from 'granim';
 import Modal from './Modal';
 import Icon from '../../resources/icons/Setting.svg';
 import styles from './Dashboard.css';
+import anime from 'animejs';
 
 const { ipcRenderer } = window.require('electron');
 
 export default function Dashboard() {
-  const [localSystem, setLocalSystem] = useState({});
+  const [localSystem, setLocalSystem] = useState({
+    folderUsage: 0,
+    settingSize: 0,
+    fileCount: 0,
+    folderPercent: 0,
+    settingPercent: 0
+  });
   const [modalToggle, setModalToggle] = useState(false);
+  const [files, setFiles] = useState({
+    count: 0
+  });
+  const fileCountRef = useRef();
 
   useEffect(() => {
-  ipcRenderer.on('file-update', (event, arg) => {
-    setLocalSystem({
-      ...arg
+    ipcRenderer.on('file-update', (event, arg) => {
+      setLocalSystem({
+        ...arg
+      });
+      anime({
+        targets: files,
+        count: arg.fileCount,
+        duration: 2000,
+        easing: 'linear',
+        round: 1,
+        update: function() {
+          fileCountRef.current.innerHTML = files.count;
+          setFiles(files);
+        }
+      });
     });
-  });
   }, []);
 
   const updateSignal = () => {
@@ -25,6 +47,17 @@ export default function Dashboard() {
       .then(res => {
         setLocalSystem({
           ...res
+        });
+        anime({
+          targets: files,
+          count: res.fileCount,
+          duration: 2000,
+          easing: 'linear',
+          round: 1,
+          update: function() {
+            fileCountRef.current.innerHTML = files.count;
+            setFiles(files);
+          }
         });
         return res;
       })
@@ -63,6 +96,7 @@ export default function Dashboard() {
       }
     });
   }, []);
+
   return (
     <div className={styles.dashboard}>
       {modalToggle && (
@@ -86,7 +120,7 @@ export default function Dashboard() {
         </button>
 
         <div className={styles.text}>
-          <span className={styles.amount}>{localSystem.fileCount}</span>
+          <span className={styles.amount} ref={fileCountRef} />
           <span className={styles.unit}>Files</span>
         </div>
         <div className={styles.barBackground}>
