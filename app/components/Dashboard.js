@@ -10,18 +10,26 @@ const { ipcRenderer } = window.require('electron');
 export default function Dashboard() {
   const [localSystem, setLocalSystem] = useState({});
   const [modalToggle, setModalToggle] = useState(false);
-  const updateSignal = () => {
-    const res = ipcRenderer.sendSync('data-update-signal');
-    setLocalSystem({
-      ...res
-    });
-  };
 
   ipcRenderer.on('file-update', (event, arg) => {
     setLocalSystem({
       ...arg
     });
   });
+
+  const updateSignal = () => {
+    ipcRenderer
+      .invoke('data-update-signal')
+      .then(res => {
+        setLocalSystem({
+          ...res
+        });
+        return res;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     ipcRenderer.send('socket-setup');
