@@ -37,18 +37,18 @@
 .iconWrapper {
   position: fixed;
   cursor: pointer;
-  top: 1rem;
-  right: 1rem;
-  width: 3rem;
-  height: 3rem;
+  top: 2rem;
+  right: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border: 0;
   background: transparent;
   outline: none;
 }
 
 .settingIcon {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 .text {

@@ -12,6 +12,7 @@
  */
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import fs from 'fs';
 import log from 'electron-log';
 import State from './main-process/state';
 import { FOLDERPATH } from './constants/path';
@@ -28,7 +29,6 @@ export default class AppUpdater {
 
 let mainWindow = null;
 let authWindow = null;
-console.log(FOLDERPATH);
 const state = new State();
 
 if (process.env.NODE_ENV === 'production') {
@@ -63,8 +63,10 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 1000,
+    height: 600,
+    minWidth: 800,
+    minHeight: 480,
     webPreferences: {
       nodeIntegration: true
     }
@@ -195,7 +197,12 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  if (!fs.existsSync(FOLDERPATH)) {
+    fs.mkdirSync(FOLDERPATH);
+  }
+  createWindow();
+});
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the

@@ -4,7 +4,6 @@ import fs from 'fs';
 import { SOCKETSERVER, FOLDERPATH } from '../constants/path';
 
 async function setupSocket(systemVariable, mainwindow) {
-  console.log(SOCKETSERVER);
   const ws = new WebSocket(SOCKETSERVER);
   ws.on('open', function open() {
     // ws.send('something')
