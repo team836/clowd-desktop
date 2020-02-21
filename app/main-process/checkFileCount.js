@@ -9,7 +9,7 @@ function fileCount(dir) {
       if (err) {
         reject(err);
       }
-      resolve(files.length); // return GB
+      resolve(files.length); // number of files
     });
   });
 }
