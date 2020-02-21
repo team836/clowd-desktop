@@ -4,18 +4,28 @@ import Granim from 'granim';
 import Modal from './Modal';
 import Icon from '../../resources/icons/Setting.svg';
 import styles from './Dashboard.css';
+import anime from 'animejs';
 
 const { ipcRenderer } = window.require('electron');
 
 export default function Dashboard() {
-  const [localSystem, setLocalSystem] = useState({});
+  const [localSystem, setLocalSystem] = useState({
+    folderUsage: 0,
+    settingSize: 0,
+    fileCount: 0,
+    folderPercent: 0,
+    settingPercent: 0
+  });
+  const [fileCount, setFileCount] = useState(0);
   const [modalToggle, setModalToggle] = useState(false);
 
-  ipcRenderer.on('file-update', (event, arg) => {
-    setLocalSystem({
-      ...arg
+  useEffect(() => {
+    ipcRenderer.on('file-update', (event, arg) => {
+      setLocalSystem({
+        ...arg
+      });
     });
-  });
+  }, []);
 
   const updateSignal = () => {
     ipcRenderer
@@ -61,6 +71,7 @@ export default function Dashboard() {
       }
     });
   }, []);
+
   return (
     <div className={styles.dashboard}>
       {modalToggle && (
