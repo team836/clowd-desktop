@@ -1,4 +1,5 @@
-import checkDiskSpace from './checkDiskSpace';
+// import checkDiskSpace from './checkDiskSpace';
+import checkDiskSpace from 'check-disk-space';
 import checkFileCount from './checkFileCount';
 import checkFolderUsage from './checkFolderUsage';
 import checkNetworkState from './checkNetworkState';
@@ -22,22 +23,22 @@ class State {
   }
 
   async checkSystemVariable(FOLDERPATH) {
-    const [disk, folder, fileCount, ntw] = await Promise.all([
+    // checkNetworkState()
+    const [disk, folder, fileCount] = await Promise.all([
       checkDiskSpace(FOLDERPATH),
       checkFolderUsage(FOLDERPATH),
-      checkFileCount(FOLDERPATH),
-      checkNetworkState()
+      checkFileCount(FOLDERPATH)
     ]);
 
     this.diskFree = (disk.free / 1024 ** 3).toFixed(2);
     this.diskSize = (disk.size / 1024 ** 3).toFixed(2);
     this.folderUsage = (folder / 1024 ** 3).toFixed(2);
     this.fileCount = fileCount;
-    this.bandwidth = ntw.bandwidth;
     this.capacity = Math.min(
       this.diskFree,
       this.settingSize - this.folderUsage
     );
+    this.print();
     const temp = {
       folderUsage: this.folderUsage,
       settingSize: this.settingSize,
