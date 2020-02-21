@@ -1,33 +1,9 @@
-import { exec } from 'child_process';
+// import { exec } from 'child_process';
+import speedTest from 'speedtest-net';
 
-function checkNetwork() {
-  return new Promise((resolve, reject) => {
-    exec(
-      'cmd /c chcp 65001>nul &&netsh wlan show interfaces',
-      (error, stdout, stderr) => {
-        if (error) {
-          console.log(`network err ${error}`);
-          reject(error);
-        }
-        resolve(stdout ? mapOutput(stdout) : stderr);
-      }
-    );
-  });
+async function checkNetwork() {
+  const speed = await speedTest();
+  return speed.download.bandwidth;
 }
 
-/**
- * @param {string} stdout
- */
-function mapOutput(stdout) {
-  let parsed = stdout
-    .trim()
-    .split('\r\n')
-    .filter(line => {
-      return line.includes('Mbps');
-    });
-  // eslint-disable-next-line prefer-destructuring
-  parsed = parsed[0];
-  parsed = parseInt(parsed.split(':')[1].trim(), 10);
-  return { bandwidth: parsed };
-}
 export default checkNetwork;

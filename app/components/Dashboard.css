@@ -49,6 +49,7 @@
 .settingIcon {
   width: 2rem;
   height: 2rem;
+  opacity: 0.5;
 }
 
 .text {
@@ -56,11 +57,12 @@
   line-height: 0.5;
 }
 .amount {
-  font-size: 15vw;
-  letter-spacing: -0.03em;
+  font-size: 20vw;
+  letter-spacing: -0.05em;
 }
 .unit {
   font-size: 7vw;
+  margin-left: 0.5rem;
 }
 
 .barBackground {
