@@ -32,13 +32,12 @@ class State {
 
     this.diskFree = (disk.free / 1024 ** 3).toFixed(2);
     this.diskSize = (disk.size / 1024 ** 3).toFixed(2);
-    this.folderUsage = (folder / 1024 ** 3).toFixed(2);
+    this.folderUsage = parseFloat((folder / 1024 ** 3).toFixed(2));
     this.fileCount = fileCount;
     this.capacity = Math.min(
       this.diskFree,
       this.settingSize - this.folderUsage
     );
-    this.print();
     const temp = {
       folderUsage: this.folderUsage,
       settingSize: this.settingSize,
