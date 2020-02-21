@@ -1,7 +1,7 @@
-const WebSocket = require('ws');
-const path = require('path');
-const fs = require('fs');
-const { SOCKETSERVER, FOLDERPATH } = require('../constants/path');
+import WebSocket from 'ws';
+import path from 'path';
+import fs from 'fs';
+import { SOCKETSERVER, FOLDERPATH } from '../constants/path';
 
 async function setupSocket(systemVariable, mainwindow) {
   console.log(SOCKETSERVER);
@@ -39,4 +39,4 @@ async function setupSocket(systemVariable, mainwindow) {
   return ws;
 }
 
-module.exports = { setupSocket };
+export default setupSocket;

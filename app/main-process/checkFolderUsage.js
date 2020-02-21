@@ -1,5 +1,5 @@
-const getSize = require('get-folder-size');
-const fs = require('fs');
+import fs from 'fs';
+import getSize from 'get-folder-size';
 
 function checkFolderSize(dir) {
   return new Promise((resolve, reject) => {
@@ -17,4 +17,4 @@ function checkFolderSize(dir) {
   });
 }
 
-module.exports = checkFolderSize;
+export default checkFolderSize;

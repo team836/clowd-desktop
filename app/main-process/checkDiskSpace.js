@@ -1,7 +1,6 @@
-const { exec } = require('child_process');
-const fs = require('fs');
-const path = require('path');
-const util = require('util');
+import { exec } from 'child_process';
+import path from 'path';
+import util from 'util';
 
 // Create some errors
 // eslint-disable-next-line func-names
@@ -143,25 +142,27 @@ function checkUnix(directoryPath) {
 }
 
 // Inject the right check depending on the OS
-module.exports = process.platform === 'win32' ? checkWin32 : checkUnix;
+// module.exports = process.platform === 'win32' ? checkWin32 : checkUnix;
 
-/**
- * Get the first existing parent path
- *
- * @param {String} directoryPath - The file/folder path from where we want to know disk space
- * @returns {String} - The first existing parent path
- */
-module.exports.getFirstExistingParentPath = directoryPath => {
-  let parentDirectoryPath = directoryPath;
-  let parentDirectoryFound = fs.existsSync(parentDirectoryPath);
+// /**
+//  * Get the first existing parent path
+//  *
+//  * @param {String} directoryPath - The file/folder path from where we want to know disk space
+//  * @returns {String} - The first existing parent path
+//  */
+// module.exports.getFirstExistingParentPath = directoryPath => {
+//   let parentDirectoryPath = directoryPath;
+//   let parentDirectoryFound = fs.existsSync(parentDirectoryPath);
 
-  while (!parentDirectoryFound) {
-    parentDirectoryPath = path.normalize(`${parentDirectoryPath}/..`);
-    parentDirectoryFound = fs.existsSync(parentDirectoryPath);
-  }
+//   while (!parentDirectoryFound) {
+//     parentDirectoryPath = path.normalize(`${parentDirectoryPath}/..`);
+//     parentDirectoryFound = fs.existsSync(parentDirectoryPath);
+//   }
 
-  return parentDirectoryPath;
-};
+//   return parentDirectoryPath;
+// };
 
-module.exports.InvalidPathError = InvalidPathError;
-module.exports.NoMatchError = NoMatchError;
+// export InvalidPathError;
+// export NoMatchError;
+
+export default process.platform === 'win32' ? checkWin32 : checkUnix;

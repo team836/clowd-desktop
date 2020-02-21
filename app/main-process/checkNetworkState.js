@@ -1,4 +1,4 @@
-const { exec } = require('child_process');
+import { exec } from 'child_process';
 
 function checkNetwork() {
   return new Promise((resolve, reject) => {
@@ -29,4 +29,4 @@ function mapOutput(stdout) {
   parsed = parseInt(parsed.split(':')[1].trim(), 10);
   return { bandwidth: parsed };
 }
-module.exports = checkNetwork;
+export default checkNetwork;

@@ -15,7 +15,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import State from './main-process/state';
 import { FOLDERPATH } from './constants/path';
-import { setupSocket } from './main-process/webSocket';
+import setupSocket from './main-process/webSocket';
 // import MenuBuilder from './menu';
 
 export default class AppUpdater {
@@ -28,6 +28,7 @@ export default class AppUpdater {
 
 let mainWindow = null;
 let authWindow = null;
+console.log(FOLDERPATH);
 const state = new State();
 
 if (process.env.NODE_ENV === 'production') {

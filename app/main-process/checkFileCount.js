@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 function fileCount(dir) {
   return new Promise((resolve, reject) => {
@@ -14,4 +14,4 @@ function fileCount(dir) {
   });
 }
 
-module.exports = fileCount;
+export default fileCount;
