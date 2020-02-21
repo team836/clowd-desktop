@@ -1,10 +1,12 @@
 import WebSocket from 'ws';
 import path from 'path';
 import fs from 'fs';
+import { machineId, machineIdSync } from 'node-machine-id';
 import { SOCKETSERVER, FOLDERPATH } from '../constants/path';
 
 async function setupSocket(systemVariable, mainwindow) {
-  const ws = new WebSocket(SOCKETSERVER);
+  let mid = machineIdSync();
+  const ws = new WebSocket(`${SOCKETSERVER}?mid=${mid}`);
   ws.on('open', function open() {
     // ws.send('something')
   });

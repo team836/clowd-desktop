@@ -20,8 +20,7 @@ export default function Login() {
   });
 
   const handleClick = () => {
-    setAuthSuccess(true); // direct to dashboard
-    // ipcRenderer.send('google-signIn', 'sign-in'); // make auth window
+    ipcRenderer.send('google-signIn', 'sign-in'); // make auth window
   };
   const handleKeyDown = ev => {
     if (ev.keyCode === 13) {
