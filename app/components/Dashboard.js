@@ -9,7 +9,7 @@ import anime from 'animejs';
 const { ipcRenderer } = window.require('electron');
 
 export default function Dashboard() {
-  const [localSystem, setLocalSystem] = useState({
+  const [localVariable, setLocalVariable] = useState({
     folderUsage: 0,
     settingSize: 0,
     fileCount: 0,
@@ -24,7 +24,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     ipcRenderer.on('file-update', (event, arg) => {
-      setLocalSystem({
+      setLocalVariable({
         ...arg
       });
       if (process.platform === 'darwin') {
@@ -51,7 +51,7 @@ export default function Dashboard() {
     ipcRenderer
       .invoke('data-update-signal')
       .then(res => {
-        setLocalSystem({
+        setLocalVariable({
           ...res
         });
         if (process.platform === 'darwin') {
@@ -114,8 +114,8 @@ export default function Dashboard() {
       {modalToggle && (
         <Modal
           setModalToggle={setModalToggle}
-          localSystem={localSystem}
-          setLocalSystem={setLocalSystem}
+          localVariable={localVariable}
+          setLocalVariable={setLocalVariable}
         />
       )}
 
@@ -138,7 +138,7 @@ export default function Dashboard() {
         <div className={styles.barBackground}>
           <div
             className={styles.barFill}
-            style={{ width: `${localSystem.folderPercent}%` }}
+            style={{ width: `${localVariable.folderPercent}%` }}
           />
         </div>
       </h1>

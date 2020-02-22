@@ -14,7 +14,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import fs from 'fs';
 import log from 'electron-log';
-import State from './main-process/state';
+import LocalVariable from './main-process/LocalVariable';
 import { FOLDERPATH } from './constants/path';
 import setupSocket from './main-process/webSocket';
 // import MenuBuilder from './menu';
@@ -29,7 +29,7 @@ export default class AppUpdater {
 
 let mainWindow = null;
 let authWindow = null;
-const state = new State();
+const localVariable = new LocalVariable();
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -218,19 +218,19 @@ ipcMain.on('google-signIn', () => {
 
 ipcMain.on('dashboard-setup', () => {
   console.log('dashboard setup');
-  setupSocket(state, mainWindow);
+  setupSocket(localVariable, mainWindow);
 });
 
 // eslint-disable-next-line no-unused-vars
 ipcMain.handle('data-update-signal', async (event, arg) => {
-  const obj = await state.checkSystemVariable(FOLDERPATH);
+  const obj = await localVariable.checkSystemVariable(FOLDERPATH);
   console.log(obj);
   return obj;
 });
 
 ipcMain.handle('data-settingSize', async (event, arg) => {
-  state.settingSize = arg;
-  const obj = await state.checkSystemVariable(FOLDERPATH);
+  localVariable.settingSize = arg;
+  const obj = await localVariable.checkSystemVariable(FOLDERPATH);
   // eslint-disable-next-line no-param-reassign
   return obj;
 });

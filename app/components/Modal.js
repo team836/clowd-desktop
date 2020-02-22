@@ -5,13 +5,17 @@ import styles from './Modal.css';
 const { ipcRenderer } = window.require('electron');
 
 // eslint-disable-next-line react/prop-types
-export default function Modal({ setModalToggle, localSystem, setLocalSystem }) {
+export default function Modal({
+  setModalToggle,
+  localVariable,
+  setlocalVariable
+}) {
   // eslint-disable-next-line react/prop-types
-  const [value, setValue] = useState(localSystem.settingSize);
+  const [value, setValue] = useState(localVariable.settingSize);
   const [isLoaded, setIsLoaded] = useState(false);
   const [fillWidthPercent, setFillWidthPercent] = useState(
     // eslint-disable-next-line react/prop-types
-    localSystem.settingPercent
+    localVariable.settingPercent
   );
 
   useEffect(() => {
@@ -22,7 +26,7 @@ export default function Modal({ setModalToggle, localSystem, setLocalSystem }) {
     ipcRenderer
       .invoke('data-settingSize', parseInt(value, 10))
       .then(res => {
-        setLocalSystem(res);
+        setlocalVariable(res);
         return res;
       })
       .catch(err => {

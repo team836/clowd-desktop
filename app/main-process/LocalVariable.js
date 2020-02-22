@@ -4,12 +4,12 @@ import checkFileCount from './checkFileCount';
 import checkFolderUsage from './checkFolderUsage';
 // import checkNetworkState from './checkNetworkState';
 
-class State {
+class LocalVariable {
   constructor() {
-    if (State.instance) {
-      return State.instance;
+    if (LocalVariable.instance) {
+      return LocalVariable.instance;
     }
-    State.instance = this;
+    LocalVariable.instance = this;
     this.diskSize = 0; // disk total size GB
     this.diskFree = 0; // disk remain size GB
     this.fileCount = 0;
@@ -62,4 +62,4 @@ class State {
   }
 }
 
-export default State;
+export default LocalVariable;
