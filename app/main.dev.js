@@ -14,11 +14,14 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import fs from 'fs';
 import log from 'electron-log';
-import LocalVariable from './main-process/LocalVariable';
-import SystemVariable from './main-process/SystemVariable';
 import { FOLDERPATH } from './constants/path';
 import setupSocket from './main-process/webSocket';
+import LocalVariable from './main-process/LocalVariable';
+import SystemVariable from './main-process/SystemVariable';
+
 // import MenuBuilder from './menu';
+
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
 
 export default class AppUpdater {
   constructor() {

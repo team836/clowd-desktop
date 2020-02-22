@@ -1,14 +1,14 @@
+/* eslint-disable react/prop-types */
 // @flow
 import React, { useState, useEffect } from 'react';
 import styles from './Modal.css';
 
 const { ipcRenderer } = window.require('electron');
 
-// eslint-disable-next-line react/prop-types
 export default function Modal({
   setModalToggle,
   localVariable,
-  setlocalVariable
+  setLocalVariable
 }) {
   // eslint-disable-next-line react/prop-types
   const [value, setValue] = useState(localVariable.settingSize);
@@ -26,7 +26,7 @@ export default function Modal({
     ipcRenderer
       .invoke('data-settingSize', parseInt(value, 10))
       .then(res => {
-        setlocalVariable(res);
+        setLocalVariable(res);
         return res;
       })
       .catch(err => {

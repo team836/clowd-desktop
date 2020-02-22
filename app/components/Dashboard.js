@@ -1,10 +1,10 @@
 // @flow
 import React, { useState, useEffect, useRef } from 'react';
 import Granim from 'granim';
+import anime from 'animejs';
 import Modal from './Modal';
 import Icon from '../../resources/icons/Setting.svg';
 import styles from './Dashboard.css';
-import anime from 'animejs';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -24,13 +24,14 @@ export default function Dashboard() {
 
   useEffect(() => {
     ipcRenderer.on('file-update', (event, arg) => {
+      const res = arg;
       setLocalVariable({
-        ...arg
+        ...res
       });
       if (process.platform === 'darwin') {
-        arg.fileCount -= 1;
+        res.fileCount -= 1;
         if (arg.fileCount < 0) {
-          arg.fileCount = 0;
+          res.fileCount = 0;
         }
       }
       anime({
@@ -39,7 +40,7 @@ export default function Dashboard() {
         duration: 2000,
         easing: 'easeInOutSine',
         round: 1,
-        update: function() {
+        update: () => {
           fileCountRef.current.innerHTML = files.count;
           setFiles(files);
         }
@@ -66,7 +67,7 @@ export default function Dashboard() {
           duration: 2000,
           easing: 'easeInOutSine',
           round: 1,
-          update: function() {
+          update: () => {
             fileCountRef.current.innerHTML = files.count;
             setFiles(files);
           }
