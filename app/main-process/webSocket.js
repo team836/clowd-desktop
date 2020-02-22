@@ -1,12 +1,11 @@
 import WebSocket from 'ws';
 import path from 'path';
 import fs from 'fs';
-import { machineIdSync } from 'node-machine-id';
+
 import { SOCKETSERVER, FOLDERPATH } from '../constants/path';
 
-async function setupSocket(systemVariable, mainwindow) {
-  const mid = machineIdSync();
-  const ws = new WebSocket(`${SOCKETSERVER}?mid=${mid}`);
+async function setupSocket(systemVariable, localVariable, mainWindow) {
+  const ws = new WebSocket(`${SOCKETSERVER}?mid=${systemVariable.mid}`);
   ws.on('open', function open() {
     // ws.send('something')
   });
@@ -25,14 +24,14 @@ async function setupSocket(systemVariable, mainwindow) {
         }
       );
     }
-    const obj = await systemVariable.checkSystemVariable(FOLDERPATH);
-    mainwindow.webContents.send('file-update', obj);
+    const obj = await localVariable.checkLocalVariable(FOLDERPATH);
+    mainWindow.webContents.send('file-update', obj);
   });
   ws.on('ping', function ping(data) {
     console.log(`ping data: ${data}`);
     const obj = {
-      capacity: systemVariable.capacity * 1024 ** 3, // byte
-      bandwidth: systemVariable.bandwidth
+      capacity: localVariable.capacity * 1024 ** 3, // byte
+      bandwidth: localVariable.bandwidth
     };
     ws.send(JSON.stringify(obj)); // 정보 실어 보내기
   });

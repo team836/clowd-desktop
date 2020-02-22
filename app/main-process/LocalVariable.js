@@ -22,7 +22,7 @@ class LocalVariable {
     return this;
   }
 
-  async checkSystemVariable(FOLDERPATH) {
+  async checkLocalVariable(FOLDERPATH) {
     // checkNetworkState()
     const [disk, folder, fileCount] = await Promise.all([
       checkDiskSpace(FOLDERPATH),

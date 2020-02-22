@@ -15,7 +15,6 @@ export default function Login() {
     return <Redirect to={routes.DASHBOARD} />;
   }
   ipcRenderer.on('sign-in-ok', (event, arg) => {
-    console.log(arg); // get token
     setAuthSuccess(true); // go to dashboard
   });
 
