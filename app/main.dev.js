@@ -216,13 +216,11 @@ ipcMain.on('google-signIn', () => {
   createAuthWindow(mainWindow);
 });
 
-ipcMain.on('socket-setup', () => {
+ipcMain.on('dashboard-setup', () => {
+  console.log('dashboard setup');
   setupSocket(state, mainWindow);
 });
 
-ipcMain.on('check-network', () => {
-  state.checkNetwork();
-});
 // eslint-disable-next-line no-unused-vars
 ipcMain.handle('data-update-signal', async (event, arg) => {
   const obj = await state.checkSystemVariable(FOLDERPATH);

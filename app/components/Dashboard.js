@@ -79,7 +79,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    ipcRenderer.send('socket-setup');
+    ipcRenderer.send('dashboard-setup');
   }, []);
 
   useEffect(() => {

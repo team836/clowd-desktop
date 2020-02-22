@@ -1,11 +1,11 @@
 import WebSocket from 'ws';
 import path from 'path';
 import fs from 'fs';
-import { machineId, machineIdSync } from 'node-machine-id';
+import { machineIdSync } from 'node-machine-id';
 import { SOCKETSERVER, FOLDERPATH } from '../constants/path';
 
 async function setupSocket(systemVariable, mainwindow) {
-  let mid = machineIdSync();
+  const mid = machineIdSync();
   const ws = new WebSocket(`${SOCKETSERVER}?mid=${mid}`);
   ws.on('open', function open() {
     // ws.send('something')
@@ -37,6 +37,10 @@ async function setupSocket(systemVariable, mainwindow) {
     ws.send(JSON.stringify(obj)); // 정보 실어 보내기
   });
 
+  ws.on('close', (code, reason) => {
+    console.log(code);
+    console.log(reason);
+  });
   return ws;
 }
 
