@@ -2,7 +2,7 @@
 import checkDiskSpace from 'check-disk-space';
 import checkFileCount from './checkFileCount';
 import checkFolderUsage from './checkFolderUsage';
-import checkNetworkState from './checkNetworkState';
+// import checkNetworkState from './checkNetworkState';
 
 class State {
   constructor() {
