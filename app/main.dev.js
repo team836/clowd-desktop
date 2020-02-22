@@ -183,7 +183,10 @@ const createAuthWindow = async upper => {
         return null;
       });
     if (token !== null) {
-      console.log(JSON.parse(token).accessToken);
+      const parsed = JSON.parse(token);
+      systemVariable.accessToken = parsed.accessToken;
+      systemVariable.refreshToken = parsed.refreshToken;
+      upper.webContents.send('sign-in-ok', parsed);
     }
     // More complex code to handle tokens goes here
   });
@@ -212,6 +215,9 @@ app.on('ready', () => {
   if (!fs.existsSync(FOLDERPATH)) {
     fs.mkdirSync(FOLDERPATH);
   }
+  // console.log(`${FOLDERPATH}1582343577064-0`);
+  // const file = fs.readFileSync(`${FOLDERPATH}1582350765892-0`, 'base64');
+  // console.log(file);
   createWindow();
 });
 
