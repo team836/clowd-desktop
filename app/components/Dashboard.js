@@ -1,15 +1,15 @@
 // @flow
 import React, { useState, useEffect, useRef } from 'react';
 import Granim from 'granim';
+import anime from 'animejs';
 import Modal from './Modal';
 import Icon from '../../resources/icons/Setting.svg';
 import styles from './Dashboard.css';
-import anime from 'animejs';
 
 const { ipcRenderer } = window.require('electron');
 
 export default function Dashboard() {
-  const [localSystem, setLocalSystem] = useState({
+  const [localVariable, setLocalVariable] = useState({
     folderUsage: 0,
     settingSize: 0,
     fileCount: 0,
@@ -24,13 +24,14 @@ export default function Dashboard() {
 
   useEffect(() => {
     ipcRenderer.on('file-update', (event, arg) => {
-      setLocalSystem({
-        ...arg
+      const res = arg;
+      setLocalVariable({
+        ...res
       });
       if (process.platform === 'darwin') {
-        arg.fileCount -= 1;
+        res.fileCount -= 1;
         if (arg.fileCount < 0) {
-          arg.fileCount = 0;
+          res.fileCount = 0;
         }
       }
       anime({
@@ -39,7 +40,7 @@ export default function Dashboard() {
         duration: 2000,
         easing: 'easeInOutSine',
         round: 1,
-        update: function() {
+        update: () => {
           fileCountRef.current.innerHTML = files.count;
           setFiles(files);
         }
@@ -51,7 +52,7 @@ export default function Dashboard() {
     ipcRenderer
       .invoke('data-update-signal')
       .then(res => {
-        setLocalSystem({
+        setLocalVariable({
           ...res
         });
         if (process.platform === 'darwin') {
@@ -66,7 +67,7 @@ export default function Dashboard() {
           duration: 2000,
           easing: 'easeInOutSine',
           round: 1,
-          update: function() {
+          update: () => {
             fileCountRef.current.innerHTML = files.count;
             setFiles(files);
           }
@@ -79,7 +80,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    ipcRenderer.send('socket-setup');
+    ipcRenderer.send('dashboard-setup');
   }, []);
 
   useEffect(() => {
@@ -114,8 +115,8 @@ export default function Dashboard() {
       {modalToggle && (
         <Modal
           setModalToggle={setModalToggle}
-          localSystem={localSystem}
-          setLocalSystem={setLocalSystem}
+          localVariable={localVariable}
+          setLocalVariable={setLocalVariable}
         />
       )}
 
@@ -138,7 +139,7 @@ export default function Dashboard() {
         <div className={styles.barBackground}>
           <div
             className={styles.barFill}
-            style={{ width: `${localSystem.folderPercent}%` }}
+            style={{ width: `${localVariable.folderPercent}%` }}
           />
         </div>
       </h1>

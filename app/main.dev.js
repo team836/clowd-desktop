@@ -14,10 +14,14 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import fs from 'fs';
 import log from 'electron-log';
-import State from './main-process/state';
 import { FOLDERPATH } from './constants/path';
 import setupSocket from './main-process/webSocket';
+import LocalVariable from './main-process/LocalVariable';
+import SystemVariable from './main-process/SystemVariable';
+
 // import MenuBuilder from './menu';
+
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
 
 export default class AppUpdater {
   constructor() {
@@ -29,7 +33,8 @@ export default class AppUpdater {
 
 let mainWindow = null;
 let authWindow = null;
-const state = new State();
+const localVariable = new LocalVariable();
+const systemVariable = new SystemVariable();
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -158,7 +163,10 @@ const createAuthWindow = async upper => {
         return null;
       });
     if (token !== null) {
-      upper.webContents.send('sign-in-ok', JSON.parse(token));
+      const parsed = JSON.parse(token);
+      systemVariable.accessToken = parsed.accessToken;
+      systemVariable.refreshToken = parsed.refreshToken;
+      upper.webContents.send('sign-in-ok', parsed);
     }
     // More complex code to handle tokens goes here
   });
@@ -187,7 +195,8 @@ const createAuthWindow = async upper => {
   // eslint-disable-next-line
   // new AppUpdater();
 };
-/**
+
+/*
  * Add event listeners...
  */
 
@@ -212,27 +221,35 @@ app.on('activate', () => {
   if (mainWindow === null) createWindow();
 });
 
+/*
+ *user request for login
+ */
 ipcMain.on('google-signIn', () => {
   createAuthWindow(mainWindow);
 });
 
-ipcMain.on('socket-setup', () => {
-  setupSocket(state, mainWindow);
+/*
+ *setup stage after user login success
+ */
+ipcMain.on('dashboard-setup', () => {
+  systemVariable.setMachinId();
+  setupSocket(systemVariable, localVariable, mainWindow);
 });
 
-ipcMain.on('check-network', () => {
-  state.checkNetwork();
-});
-// eslint-disable-next-line no-unused-vars
-ipcMain.handle('data-update-signal', async (event, arg) => {
-  const obj = await state.checkSystemVariable(FOLDERPATH);
+/*
+ * user request data update within 20s
+ */
+ipcMain.handle('data-update-signal', async () => {
+  const obj = await localVariable.checkLocalVariable(FOLDERPATH);
   console.log(obj);
   return obj;
 });
 
+/*
+ *user request that change maximum settingsize
+ */
 ipcMain.handle('data-settingSize', async (event, arg) => {
-  state.settingSize = arg;
-  const obj = await state.checkSystemVariable(FOLDERPATH);
-  // eslint-disable-next-line no-param-reassign
+  localVariable.settingSize = arg;
+  const obj = await localVariable.checkLocalVariable(FOLDERPATH);
   return obj;
 });
