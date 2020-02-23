@@ -16,10 +16,6 @@ async function setupSocket(systemVariable, localVariable, mainWindow) {
   });
   ws.on('message', async function incoming(data) {
     const res = JSON.parse(data);
-    console.log(res);
-    console.log(`len: ${res.contents.length}`);
-
-    // const date = new Date().valueOf();
     if (res.type === 'save') {
       console.log('save');
       const len = res.contents.length;
@@ -36,20 +32,25 @@ async function setupSocket(systemVariable, localVariable, mainWindow) {
       }
       const obj = await localVariable.checkLocalVariable(FOLDERPATH);
       mainWindow.webContents.send('file-update', obj);
+      console.log('done');
     } else if (res.type === 'down') {
       console.log('down');
       const len = res.contents.length;
       const { contents } = res;
       const files = [];
       for (let i = 0; i < len; i += 1) {
-        const file = fs.readFileSync(
-          path.join(FOLDERPATH, contents[i].name),
-          'base64'
-        );
-        files.push({ name: contents[i].name, data: file });
+        try {
+          const file = fs.readFileSync(
+            path.join(FOLDERPATH, contents[i].name),
+            'base64'
+          );
+          files.push({ name: contents[i].name, data: file });
+        } catch (err) {
+          files.push({ name: contents[i].name, data: '' });
+        }
       }
-      // console.log(JSON.stringify(files));
       ws.send(JSON.stringify(files));
+      console.log('done');
     }
   });
   ws.on('ping', function ping(data) {
@@ -58,14 +59,12 @@ async function setupSocket(systemVariable, localVariable, mainWindow) {
       capacity: parseInt(localVariable.capacity * 1024 ** 3, 10), // byte
       bandwidth: localVariable.bandwidth
     };
-    console.log(JSON.stringify(obj));
     ws.send(JSON.stringify(obj)); // 정보 실어 보내기
   });
 
-  // ws.on('close', (code, reason) => {
-  //   console.log(`code: ${code}`);
-  //   console.log(reason);
-  // });
+  ws.on('close', code => {
+    console.log(`close code: ${code}`);
+  });
   return ws;
 }
 

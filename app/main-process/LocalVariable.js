@@ -38,6 +38,7 @@ class LocalVariable {
       this.diskFree,
       this.settingSize - this.folderUsage
     );
+    this.bandwidth = 50;
     const temp = {
       folderUsage: this.folderUsage,
       settingSize: this.settingSize,
