@@ -215,9 +215,7 @@ app.on('ready', () => {
   if (!fs.existsSync(FOLDERPATH)) {
     fs.mkdirSync(FOLDERPATH);
   }
-  // console.log(`${FOLDERPATH}1582343577064-0`);
-  // const file = fs.readFileSync(`${FOLDERPATH}1582350765892-0`, 'base64');
-  // console.log(file);
+
   createWindow();
 });
 
@@ -239,6 +237,7 @@ ipcMain.on('google-signIn', () => {
  */
 ipcMain.on('dashboard-setup', () => {
   systemVariable.setMachinId();
+
   setupSocket(systemVariable, localVariable, mainWindow);
 });
 
@@ -248,6 +247,7 @@ ipcMain.on('dashboard-setup', () => {
 ipcMain.handle('data-update-signal', async () => {
   const obj = await localVariable.checkLocalVariable(FOLDERPATH);
   console.log(obj);
+  localVariable.print();
   return obj;
 });
 
