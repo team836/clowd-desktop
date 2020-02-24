@@ -53,7 +53,7 @@ async function setupSocket(systemVariable, localVariable, mainWindow) {
 
   ws.on('close', code => {
     console.log(`close code: ${code}`);
-    // mainWindow.close();
+    mainWindow.close();
   });
   return ws;
 }
