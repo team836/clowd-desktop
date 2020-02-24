@@ -14,7 +14,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import fs from 'fs';
 import log from 'electron-log';
-import { FOLDERPATH } from './constants/path';
+import { FOLDERPATH, AUTHPATH } from './constants/path';
 import setupSocket from './main-process/webSocket';
 import LocalVariable from './main-process/LocalVariable';
 import SystemVariable from './main-process/SystemVariable';
@@ -127,7 +127,7 @@ const createAuthWindow = async upper => {
     }
   });
 
-  authWindow.loadURL('https://dev.api.clowd.xyz/v1/auth/clowder/login', {
+  authWindow.loadURL(AUTHPATH, {
     userAgent: 'Chrome'
   });
 
@@ -215,9 +215,7 @@ app.on('ready', () => {
   if (!fs.existsSync(FOLDERPATH)) {
     fs.mkdirSync(FOLDERPATH);
   }
-  // console.log(`${FOLDERPATH}1582343577064-0`);
-  // const file = fs.readFileSync(`${FOLDERPATH}1582350765892-0`, 'base64');
-  // console.log(file);
+
   createWindow();
 });
 

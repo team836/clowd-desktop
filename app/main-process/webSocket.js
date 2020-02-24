@@ -1,44 +1,57 @@
 import WebSocket from 'ws';
-import path from 'path';
-import fs from 'fs';
-
+import { saveFiles, sendFiles, deleteFiles } from './fileAction';
 import { SOCKETSERVER, FOLDERPATH } from '../constants/path';
 
 async function setupSocket(systemVariable, localVariable, mainWindow) {
-  const ws = new WebSocket(`${SOCKETSERVER}?mid=${systemVariable.mid}`);
+  const ws = new WebSocket(`${SOCKETSERVER}?mid=${systemVariable.mid}`, {
+    headers: {
+      Authorization: `Bearer ${systemVariable.accessToken}`
+    }
+  });
   ws.on('open', function open() {
-    // ws.send('something')
+    // ws.send(JSON.stringify({ accessToken: systemVariable.accessToken }));
   });
   ws.on('message', async function incoming(data) {
     const res = JSON.parse(data);
-    const date = new Date().valueOf();
-    console.log(`type ${typeof res}`);
-    console.log(`len: ${res.length}`);
-    for (let i = 0; i < res.length; i += 1) {
-      fs.writeFile(
-        path.join(FOLDERPATH, `${date}-${i}`),
-        res[i].data,
-        { encoding: 'base64' },
-        () => {
-          // console.log('File created');
-        }
-      );
+    switch (res.type) {
+      case 'save': {
+        saveFiles(res, FOLDERPATH);
+        const obj = await localVariable.checkLocalVariable(FOLDERPATH);
+        mainWindow.webContents.send('file-update', obj);
+        console.log('save done');
+        break;
+      }
+      case 'down': {
+        const files = sendFiles(res, FOLDERPATH);
+        mainWindow.webContents.send('send-signal');
+        ws.send(JSON.stringify(files));
+        console.log('down done');
+        break;
+      }
+      case 'delete': {
+        deleteFiles(res, FOLDERPATH);
+        const obj = await localVariable.checkLocalVariable(FOLDERPATH);
+        mainWindow.webContents.send('file-update', obj);
+        console.log('delete done');
+        break;
+      }
+      default: {
+        console.log('case error');
+      }
     }
-    const obj = await localVariable.checkLocalVariable(FOLDERPATH);
-    mainWindow.webContents.send('file-update', obj);
   });
   ws.on('ping', function ping(data) {
     console.log(`ping data: ${data}`);
     const obj = {
-      capacity: localVariable.capacity * 1024 ** 3, // byte
+      capacity: localVariable.capacity, // byte
       bandwidth: localVariable.bandwidth
     };
     ws.send(JSON.stringify(obj)); // 정보 실어 보내기
   });
 
-  ws.on('close', (code, reason) => {
-    console.log(code);
-    console.log(reason);
+  ws.on('close', code => {
+    console.log(`close code: ${code}`);
+    // mainWindow.close();
   });
   return ws;
 }

@@ -8,76 +8,50 @@ import styles from './Dashboard.css';
 
 const { ipcRenderer } = window.require('electron');
 
+const initFolder = { usage: 0, setting: 0, percent: 0 };
+const initFiles = { count: 0 };
+const initLimit = { current: 0, min: 0, max: 0, percent: 0 };
+
 export default function Dashboard() {
-  const [localVariable, setLocalVariable] = useState({
-    folderUsage: 0,
-    settingSize: 0,
-    fileCount: 0,
-    folderPercent: 0,
-    settingPercent: 0
-  });
+  const [folder, setFolder] = useState(initFolder);
+  const [files, setFiles] = useState(initFiles);
+  const [limit, setLimit] = useState(initLimit);
   const [modalToggle, setModalToggle] = useState(false);
-  const [files, setFiles] = useState({
-    count: 0
-  });
+  const [signToggle, setSignToggle] = useState(false);
   const fileCountRef = useRef();
 
-  useEffect(() => {
-    ipcRenderer.on('file-update', (event, arg) => {
-      const res = arg;
-      setLocalVariable({
-        ...res
-      });
-      if (process.platform === 'darwin') {
-        res.fileCount -= 1;
-        if (arg.fileCount < 0) {
-          res.fileCount = 0;
-        }
+  const updateData = res => {
+    setFolder(res.folder);
+    setLimit(res.limit);
+    anime({
+      targets: files,
+      count: res.file.count,
+      duration: 2000,
+      easing: 'easeInOutSine',
+      round: 1,
+      update: () => {
+        fileCountRef.current.innerHTML = files.count;
+        setFiles(res.file);
       }
-      anime({
-        targets: files,
-        count: arg.fileCount,
-        duration: 2000,
-        easing: 'easeInOutSine',
-        round: 1,
-        update: () => {
-          fileCountRef.current.innerHTML = files.count;
-          setFiles(files);
-        }
-      });
     });
-  }, []);
-
+  };
   const updateSignal = () => {
     ipcRenderer
       .invoke('data-update-signal')
       .then(res => {
-        setLocalVariable({
-          ...res
-        });
-        if (process.platform === 'darwin') {
-          res.fileCount -= 1;
-          if (res.fileCount < 0) {
-            res.fileCount = 0;
-          }
-        }
-        anime({
-          targets: files,
-          count: res.fileCount,
-          duration: 2000,
-          easing: 'easeInOutSine',
-          round: 1,
-          update: () => {
-            fileCountRef.current.innerHTML = files.count;
-            setFiles(files);
-          }
-        });
+        updateData(res);
         return res;
       })
       .catch(err => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    ipcRenderer.on('file-update', (event, res) => {
+      updateData(res);
+    });
+  }, []);
 
   useEffect(() => {
     ipcRenderer.send('dashboard-setup');
@@ -88,6 +62,15 @@ export default function Dashboard() {
     setInterval(() => {
       updateSignal();
     }, 20000);
+  }, []);
+
+  useEffect(() => {
+    ipcRenderer.on('send-signal', () => {
+      setSignToggle(true);
+      setTimeout(() => {
+        setSignToggle(false);
+      }, 1800);
+    });
   }, []);
 
   useEffect(() => {
@@ -115,12 +98,14 @@ export default function Dashboard() {
       {modalToggle && (
         <Modal
           setModalToggle={setModalToggle}
-          localVariable={localVariable}
-          setLocalVariable={setLocalVariable}
+          limit={limit}
+          updateData={updateData}
+          folder={folder}
         />
       )}
 
       <canvas id="clowd-desktop-background" className={styles.canvasStyle} />
+      {signToggle && <div className={styles.border} />}
       <h1 className={styles.header}>
         <button
           type="button"
@@ -139,7 +124,7 @@ export default function Dashboard() {
         <div className={styles.barBackground}>
           <div
             className={styles.barFill}
-            style={{ width: `${localVariable.folderPercent}%` }}
+            style={{ width: `${folder.percent}%` }}
           />
         </div>
       </h1>
