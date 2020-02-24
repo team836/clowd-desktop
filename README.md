@@ -1,48 +1,54 @@
-<br>
+[CLOWD-API](https://team836.github.io/)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/master/LICENSE)
+==============
 
-<div align="center">
-  <a href="https://facebook.github.io/react/"><img src="./internals/img/react-padded-90.png" /></a>
-  <a href="https://webpack.github.io/"><img src="./internals/img/webpack-padded-90.png" /></a>
-  <a href="http://redux.js.org/"><img src="./internals/img/redux-padded-90.png" /></a>
-  <a href="https://github.com/ReactTraining/react-router"><img src="./internals/img/react-router-padded-90.png" /></a>
-  <a href="https://flowtype.org/"><img src="./internals/img/flow-padded-90.png" /></a>
-  <a href="http://eslint.org/"><img src="./internals/img/eslint-padded-90.png" /></a>
-  <a href="https://facebook.github.io/jest/"><img src="./internals/img/jest-padded-90.png" /></a>
-  <a href="https://yarnpkg.com/"><img src="./internals/img/yarn-padded-90.png" /></a>
-</div>
+## Developed with electron & react Framework
 
-<hr />
-<br />
+Clowd-Desktop repository is for Clowder
 
-## Install
+## Functions
 
-- **If you have installation or compilation issues with this project, please see [our debugging guide](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/400)**
+> 1.  Basic API
+> 2.  User management
+> 3.  Token management
+> 4.  User Authentication
 
-First, clone the repo via git:
+## Basic API
 
-```bash
-git clone --depth 1 --single-branch --branch master https://github.com/team836/clowd-desktop.git your-project-name
-```
+Providing user Information to Front-End side
 
-And then install the dependencies with yarn.
+> 1. Offer user Information to Front-End
 
-```bash
-$ cd your-project-name
-$ yarn
-```
+## User management
 
-## Starting Development
+User Database has 3 tables (User table, Clowder table, Clowdee table)
+Clowder table and Clowdee table have dependency to User table and always handled User table with clowder table or clowdee table together.  
+As we seperate user tables, It can easily block the malformed request access like when clowder user request the API to clowdee API and vice versa
+And also It can make managing user easily.
 
-Start the app in the `dev` environment. This starts the renderer process in [**hot-module-replacement**](https://webpack.js.org/guides/hmr-react/) mode and starts a webpack dev server that sends hot updates to the renderer process:
+> 1. User Sign Up
+> 2. User Sign In / Out
+> 3. Manage User DB between clowder & clowdee
 
-```bash
-$ yarn dev
-```
+## User Authentication
 
-## Packaging for Production
+Basically we use Google Oauth2.0 API.
+Our system has multi-server which is GO server and Express server. We make GO server for
+fast file processing by maximize the parellism. Therefore GO server's authentication should be
+fast either.  
+For this, in the GO server, we didn't check the token's user payload. Just check whether this token is valid or not
+It speed up the every request's authentication by not access to database server. But It can be dangerous.  
+We overcome this problem by limit the token's expiry time very short. and refresh it many times, and check the user's valid when
+refresh the token in the API server, not GO server.
 
-To package apps for the local platform:
+> 1. Use Google Oauth2.0
+> 2. Check the user's validity in the API server
+> 3. Don't check the user's valid when access to GO server
 
-```bash
-$ yarn package
-```
+## Token management
+
+Our server is using Google Oauth2.0 API and token authentication. We get user Information from the
+Google and make accessToken and refreshToken. As we mentioned, It limit the access token's expiry time very short and It force to user should refresh the token many time.
+
+> 1. Provide accessToken and refreshToken when sign in
+> 2. Refreshing the token when accessToken is expired.
