@@ -15,6 +15,7 @@ async function setupSocket(systemVariable, localVariable, mainWindow) {
     const res = JSON.parse(data);
     switch (res.type) {
       case 'save': {
+        mainWindow.webContents.send('send-signal');
         saveFiles(res, FOLDERPATH);
         const obj = await localVariable.checkLocalVariable(FOLDERPATH);
         mainWindow.webContents.send('file-update', obj);
@@ -29,6 +30,7 @@ async function setupSocket(systemVariable, localVariable, mainWindow) {
         break;
       }
       case 'delete': {
+        mainWindow.webContents.send('send-signal');
         deleteFiles(res, FOLDERPATH);
         const obj = await localVariable.checkLocalVariable(FOLDERPATH);
         mainWindow.webContents.send('file-update', obj);
