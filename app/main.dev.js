@@ -14,7 +14,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import fs from 'fs';
 import log from 'electron-log';
-import { FOLDERPATH } from './constants/path';
+import { FOLDERPATH, AUTHPATH } from './constants/path';
 import setupSocket from './main-process/webSocket';
 import LocalVariable from './main-process/LocalVariable';
 import SystemVariable from './main-process/SystemVariable';
@@ -127,7 +127,7 @@ const createAuthWindow = async upper => {
     }
   });
 
-  authWindow.loadURL('https://dev.api.clowd.xyz/v1/auth/clowder/login', {
+  authWindow.loadURL(AUTHPATH, {
     userAgent: 'Chrome'
   });
 
@@ -167,6 +167,7 @@ const createAuthWindow = async upper => {
       systemVariable.accessToken = parsed.accessToken;
       systemVariable.refreshToken = parsed.refreshToken;
       upper.webContents.send('sign-in-ok', parsed);
+      console.log(parsed.accessToken);
     }
     // More complex code to handle tokens goes here
   });
@@ -237,7 +238,6 @@ ipcMain.on('google-signIn', () => {
  */
 ipcMain.on('dashboard-setup', () => {
   systemVariable.setMachinId();
-
   setupSocket(systemVariable, localVariable, mainWindow);
 });
 
