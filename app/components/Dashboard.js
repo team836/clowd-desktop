@@ -8,33 +8,18 @@ import styles from './Dashboard.css';
 
 const { ipcRenderer } = window.require('electron');
 
+const initFolder = { usage: 0, setting: 0, percent: 0 };
+const initFiles = { count: 0 };
+const initLimit = { current: 0, min: 0, max: 0, percent: 0 };
+
 export default function Dashboard() {
-  // const [localVariable, setLocalVariable] = useState({
-  //   folderUsage: 0,
-  //   settingSize: 0,
-  //   fileCount: 0,
-  //   folderPercent: 0,
-  //   settingPercent: 0
-  // });
-  const [files, setFiles] = useState({
-    count: 0
-  });
-  const [folder, setFolder] = useState({ usage: 0, setting: 0, percent: 0 });
-  const [limit, setLimit] = useState({
-    current: 0,
-    min: 0,
-    max: 0,
-    percent: 0
-  });
+  const [folder, setFolder] = useState(initFolder);
+  const [files, setFiles] = useState(initFiles);
+  const [limit, setLimit] = useState(initLimit);
   const [modalToggle, setModalToggle] = useState(false);
-  const [borderToggle, setBorderToggle] = useState(false);
+  const [signToggle, setSignToggle] = useState(false);
   const fileCountRef = useRef();
 
-  useEffect(() => {
-    ipcRenderer.on('file-update', (event, res) => {
-      updateData(res);
-    });
-  }, []);
   const updateData = res => {
     setFolder(res.folder);
     setLimit(res.limit);
@@ -63,6 +48,12 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
+    ipcRenderer.on('file-update', (event, res) => {
+      updateData(res);
+    });
+  }, []);
+
+  useEffect(() => {
     ipcRenderer.send('dashboard-setup');
   }, []);
 
@@ -75,9 +66,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     ipcRenderer.on('send-signal', () => {
-      setBorderToggle(true);
+      setSignToggle(true);
       setTimeout(() => {
-        setBorderToggle(false);
+        setSignToggle(false);
       }, 1800);
     });
   }, []);
@@ -109,11 +100,12 @@ export default function Dashboard() {
           setModalToggle={setModalToggle}
           limit={limit}
           updateData={updateData}
+          folder={folder}
         />
       )}
 
       <canvas id="clowd-desktop-background" className={styles.canvasStyle} />
-      {borderToggle && <div className={styles.border} />}
+      {signToggle && <div className={styles.border} />}
       <h1 className={styles.header}>
         <button
           type="button"

@@ -43,7 +43,7 @@ async function setupSocket(systemVariable, localVariable, mainWindow) {
   ws.on('ping', function ping(data) {
     console.log(`ping data: ${data}`);
     const obj = {
-      capacity: parseInt(localVariable.capacity * 1024 ** 3, 10), // byte
+      capacity: localVariable.capacity, // byte
       bandwidth: localVariable.bandwidth
     };
     ws.send(JSON.stringify(obj)); // 정보 실어 보내기
