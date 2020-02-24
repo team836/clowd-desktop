@@ -1,37 +1,34 @@
-<br>
+[CLOWD-DESKTOP](https://team836.github.io/)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/master/LICENSE)
+==============
 
-<div align="center">
-  <a href="https://facebook.github.io/react/"><img src="./internals/img/react-padded-90.png" /></a>
-  <a href="https://webpack.github.io/"><img src="./internals/img/webpack-padded-90.png" /></a>
-  <a href="http://redux.js.org/"><img src="./internals/img/redux-padded-90.png" /></a>
-  <a href="https://github.com/ReactTraining/react-router"><img src="./internals/img/react-router-padded-90.png" /></a>
-  <a href="https://flowtype.org/"><img src="./internals/img/flow-padded-90.png" /></a>
-  <a href="http://eslint.org/"><img src="./internals/img/eslint-padded-90.png" /></a>
-  <a href="https://facebook.github.io/jest/"><img src="./internals/img/jest-padded-90.png" /></a>
-  <a href="https://yarnpkg.com/"><img src="./internals/img/yarn-padded-90.png" /></a>
-</div>
+## Developed with electron & react Framework
 
-<hr />
-<br />
+Clowd-Desktop is desktop application for Clowder who share their remaining storage to clowdee
 
-## Install
+## Functions
 
-- **If you have installation or compilation issues with this project, please see [our debugging guide](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/400)**
+> 1.  setup
+> 2.  screen
+
+## setup
+
+#### Install
 
 First, clone the repo via git:
 
 ```bash
-git clone --depth 1 --single-branch --branch master https://github.com/team836/clowd-desktop.git your-project-name
+git clone https://github.com/team836/clowd-desktop.git clowd-desktop
 ```
 
 And then install the dependencies with yarn.
 
 ```bash
-$ cd your-project-name
+$ cd clowd-desktop
 $ yarn
 ```
 
-## Starting Development
+#### Starting Development
 
 Start the app in the `dev` environment. This starts the renderer process in [**hot-module-replacement**](https://webpack.js.org/guides/hmr-react/) mode and starts a webpack dev server that sends hot updates to the renderer process:
 
@@ -39,10 +36,20 @@ Start the app in the `dev` environment. This starts the renderer process in [**h
 $ yarn dev
 ```
 
-## Packaging for Production
+#### Packaging for Production
 
 To package apps for the local platform:
 
 ```bash
 $ yarn package
 ```
+
+## screen
+
+<br>
+<p align="center">login-page</p>
+<p align="center"><img src="./resources/images/login.png" width="60%" height="40%"></p>
+<p align="center">dashboard-page</p>
+<p align="center"><img src="./resources/images/dashboard.png" width="60%" height="40%"></p>
+<p align="center">modal-page</p>
+<p align="center"><img src="./resources/images/modal.png" width="60%" height="40%"></p>
