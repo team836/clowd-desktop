@@ -20,6 +20,7 @@ export default function Dashboard() {
   const [files, setFiles] = useState({
     count: 0
   });
+  const [borderToggle, setBorderToggle] = useState(false);
   const fileCountRef = useRef();
 
   useEffect(() => {
@@ -91,6 +92,15 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
+    ipcRenderer.on('send-signal', () => {
+      setBorderToggle(true);
+      setTimeout(() => {
+        setBorderToggle(false);
+      }, 1800);
+    });
+  }, []);
+
+  useEffect(() => {
     // eslint-disable-next-line no-unused-vars
     const granimInstance = new Granim({
       element: '#clowd-desktop-background',
@@ -121,6 +131,7 @@ export default function Dashboard() {
       )}
 
       <canvas id="clowd-desktop-background" className={styles.canvasStyle} />
+      {borderToggle && <div className={styles.border} />}
       <h1 className={styles.header}>
         <button
           type="button"
