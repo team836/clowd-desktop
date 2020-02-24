@@ -2,25 +2,25 @@
 // @flow
 import React, { useState, useEffect } from 'react';
 import styles from './Modal.css';
+import { changeUnitDown, changeUnitUpper } from '../utils/fileUnit';
 
 const { ipcRenderer } = window.require('electron');
 
 export default function Modal({ setModalToggle, limit, updateData }) {
   // eslint-disable-next-line react/prop-types
-  const [value, setValue] = useState(limit.current / 1024 ** 2);
+  const [value, setValue] = useState(changeUnitDown(limit.current, 2));
   const [isLoaded, setIsLoaded] = useState(false);
   const [fillWidthPercent, setFillWidthPercent] = useState(
     // eslint-disable-next-line react/prop-types
     limit.percent
   );
-
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
   const clickWarpper = () => {
     ipcRenderer
-      .invoke('data-settingSize', parseInt(value * 1024 ** 2, 10))
+      .invoke('data-settingSize', changeUnitUpper(value, 2))
       .then(res => {
         updateData(res);
         return res;
@@ -37,7 +37,10 @@ export default function Modal({ setModalToggle, limit, updateData }) {
   const inputChange = e => {
     setValue(e.target.value);
     const percent = Math.round(
-      (e.target.value / (limit.max / 1024 ** 2 - limit.min / 1024 ** 2)) * 100
+      // (e.target.value / (limit.max / 1024 ** 2 - limit.min / 1024 ** 2)) * 100
+      (e.target.value /
+        (changeUnitDown(limit.max, 2) - changeUnitDown(limit.min, 2))) *
+        100
     );
     setFillWidthPercent(percent);
   };
@@ -76,8 +79,8 @@ export default function Modal({ setModalToggle, limit, updateData }) {
           />
           <input
             type="range"
-            min={limit.min / 1024 ** 2}
-            max={limit.max / 1024 ** 2}
+            min={changeUnitDown(limit.min, 2)}
+            max={changeUnitDown(limit.max, 2)}
             step="1"
             value={value}
             className={styles.slider}
