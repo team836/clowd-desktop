@@ -40,7 +40,6 @@ class LocalVariable {
       this.settingSize - this.folderUsage
     );
     this.bandwidth = 50;
-    this.print();
     const temp = {
       folder: {
         usage: this.folderUsage,
@@ -52,7 +51,7 @@ class LocalVariable {
         current: this.settingSize,
         min: this.minSettingSize,
         max: this.maxSettingSize,
-        percent: Math.round(
+        percent: Math.ceil(
           (this.settingSize / (this.maxSettingSize - this.minSettingSize)) * 100
         )
       }
@@ -66,7 +65,7 @@ class LocalVariable {
       //   (this.settingSize / (this.maxSettingSize - this.minSettingSize)) * 100
       // )
     };
-    console.log(temp);
+    // console.log(temp);
 
     return temp;
   }

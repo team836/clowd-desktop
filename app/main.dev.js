@@ -167,7 +167,6 @@ const createAuthWindow = async upper => {
       systemVariable.accessToken = parsed.accessToken;
       systemVariable.refreshToken = parsed.refreshToken;
       upper.webContents.send('sign-in-ok', parsed);
-      console.log(parsed.accessToken);
     }
     // More complex code to handle tokens goes here
   });
@@ -239,10 +238,6 @@ ipcMain.on('google-signIn', () => {
 ipcMain.on('dashboard-setup', () => {
   systemVariable.setMachinId();
   setupSocket(systemVariable, localVariable, mainWindow);
-  setInterval(() => {
-    mainWindow.webContents.send('send-signal');
-    console.log('signal');
-  }, 10000);
 });
 
 /*
@@ -251,7 +246,6 @@ ipcMain.on('dashboard-setup', () => {
 ipcMain.handle('data-update-signal', async () => {
   const obj = await localVariable.checkLocalVariable(FOLDERPATH);
   console.log(obj);
-  localVariable.print();
   return obj;
 });
 
