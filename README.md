@@ -13,7 +13,7 @@ Clowd-Desktop is desktop application for Clowder who share their remaining stora
 
 ## setup
 
-### Install
+#### Install
 
 First, clone the repo via git:
 
@@ -28,7 +28,7 @@ $ cd clowd-desktop
 $ yarn
 ```
 
-### Starting Development
+#### Starting Development
 
 Start the app in the `dev` environment. This starts the renderer process in [**hot-module-replacement**](https://webpack.js.org/guides/hmr-react/) mode and starts a webpack dev server that sends hot updates to the renderer process:
 
@@ -36,7 +36,7 @@ Start the app in the `dev` environment. This starts the renderer process in [**h
 $ yarn dev
 ```
 
-### Packaging for Production
+#### Packaging for Production
 
 To package apps for the local platform:
 
@@ -46,4 +46,10 @@ $ yarn package
 
 ## screen
 
-screen
+<br>
+<p align="center">login-page</p>
+<p align="center"><img src="./resources/images/login.png" width="60%" height="40%"></p>
+<p align="center">dashboard-page</p>
+<p align="center"><img src="./resources/images/dashboard.png" width="60%" height="40%"></p>
+<p align="center">modal-page</p>
+<p align="center"><img src="./resources/images/modal.png" width="60%" height="40%"></p>
