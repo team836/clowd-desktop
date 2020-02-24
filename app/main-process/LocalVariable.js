@@ -2,7 +2,6 @@
 import checkDiskSpace from 'check-disk-space';
 import checkFileCount from './checkFileCount';
 import checkFolderUsage from './checkFolderUsage';
-import countFileOS from '../utils/fileCount';
 // import checkNetworkState from './checkNetworkState';
 
 class LocalVariable {
@@ -34,7 +33,7 @@ class LocalVariable {
     this.diskFree = disk.free;
     this.diskSize = disk.size;
     this.folderUsage = folder;
-    this.fileCount = countFileOS(fileCount);
+    this.fileCount = fileCount;
     this.capacity = Math.min(
       this.diskFree,
       this.settingSize - this.folderUsage

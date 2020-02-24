@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 
 function fileCount(dir) {
   return new Promise((resolve, reject) => {
@@ -9,7 +10,10 @@ function fileCount(dir) {
       if (err) {
         reject(err);
       }
-      resolve(files.length); // number of files
+      const clowdFiles = files.filter(file => {
+        return path.extname(file).toLowerCase() === '.clowd';
+      });
+      resolve(clowdFiles.length); // number of files
     });
   });
 }
