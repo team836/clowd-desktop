@@ -9,70 +9,52 @@ import styles from './Dashboard.css';
 const { ipcRenderer } = window.require('electron');
 
 export default function Dashboard() {
-  const [localVariable, setLocalVariable] = useState({
-    folderUsage: 0,
-    settingSize: 0,
-    fileCount: 0,
-    folderPercent: 0,
-    settingPercent: 0
-  });
-  const [modalToggle, setModalToggle] = useState(false);
+  // const [localVariable, setLocalVariable] = useState({
+  //   folderUsage: 0,
+  //   settingSize: 0,
+  //   fileCount: 0,
+  //   folderPercent: 0,
+  //   settingPercent: 0
+  // });
   const [files, setFiles] = useState({
     count: 0
   });
+  const [folder, setFolder] = useState({ usage: 0, setting: 0, percent: 0 });
+  const [limit, setLimit] = useState({
+    current: 0,
+    min: 0,
+    max: 0,
+    percent: 0
+  });
+  const [modalToggle, setModalToggle] = useState(false);
   const [borderToggle, setBorderToggle] = useState(false);
   const fileCountRef = useRef();
 
   useEffect(() => {
-    ipcRenderer.on('file-update', (event, arg) => {
-      const res = arg;
-      setLocalVariable({
-        ...res
-      });
-      if (process.platform === 'darwin') {
-        res.fileCount -= 1;
-        if (arg.fileCount < 0) {
-          res.fileCount = 0;
-        }
-      }
-      anime({
-        targets: files,
-        count: arg.fileCount,
-        duration: 2000,
-        easing: 'easeInOutSine',
-        round: 1,
-        update: () => {
-          fileCountRef.current.innerHTML = files.count;
-          setFiles(files);
-        }
-      });
+    ipcRenderer.on('file-update', (event, res) => {
+      updateData(res);
     });
   }, []);
-
+  const updateData = res => {
+    setFolder(res.folder);
+    setLimit(res.limit);
+    anime({
+      targets: files,
+      count: res.file.count,
+      duration: 2000,
+      easing: 'easeInOutSine',
+      round: 1,
+      update: () => {
+        fileCountRef.current.innerHTML = files.count;
+        setFiles(res.file);
+      }
+    });
+  };
   const updateSignal = () => {
     ipcRenderer
       .invoke('data-update-signal')
       .then(res => {
-        setLocalVariable({
-          ...res
-        });
-        if (process.platform === 'darwin') {
-          res.fileCount -= 1;
-          if (res.fileCount < 0) {
-            res.fileCount = 0;
-          }
-        }
-        anime({
-          targets: files,
-          count: res.fileCount,
-          duration: 2000,
-          easing: 'easeInOutSine',
-          round: 1,
-          update: () => {
-            fileCountRef.current.innerHTML = files.count;
-            setFiles(files);
-          }
-        });
+        updateData(res);
         return res;
       })
       .catch(err => {
@@ -125,8 +107,8 @@ export default function Dashboard() {
       {modalToggle && (
         <Modal
           setModalToggle={setModalToggle}
-          localVariable={localVariable}
-          setLocalVariable={setLocalVariable}
+          limit={limit}
+          updateData={updateData}
         />
       )}
 
@@ -150,7 +132,7 @@ export default function Dashboard() {
         <div className={styles.barBackground}>
           <div
             className={styles.barFill}
-            style={{ width: `${localVariable.folderPercent}%` }}
+            style={{ width: `${folder.percent}%` }}
           />
         </div>
       </h1>

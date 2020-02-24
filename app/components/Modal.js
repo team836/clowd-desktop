@@ -5,17 +5,13 @@ import styles from './Modal.css';
 
 const { ipcRenderer } = window.require('electron');
 
-export default function Modal({
-  setModalToggle,
-  localVariable,
-  setLocalVariable
-}) {
+export default function Modal({ setModalToggle, limit, updateData }) {
   // eslint-disable-next-line react/prop-types
-  const [value, setValue] = useState(localVariable.settingSize);
+  const [value, setValue] = useState(limit.current / 1024 ** 2);
   const [isLoaded, setIsLoaded] = useState(false);
   const [fillWidthPercent, setFillWidthPercent] = useState(
     // eslint-disable-next-line react/prop-types
-    localVariable.settingPercent
+    limit.percent
   );
 
   useEffect(() => {
@@ -24,9 +20,9 @@ export default function Modal({
 
   const clickWarpper = () => {
     ipcRenderer
-      .invoke('data-settingSize', parseInt(value, 10))
+      .invoke('data-settingSize', parseInt(value * 1024 ** 2, 10))
       .then(res => {
-        setLocalVariable(res);
+        updateData(res);
         return res;
       })
       .catch(err => {
@@ -40,7 +36,9 @@ export default function Modal({
 
   const inputChange = e => {
     setValue(e.target.value);
-    const percent = e.target.value;
+    const percent = Math.round(
+      (e.target.value / (limit.max / 1024 ** 2 - limit.min / 1024 ** 2)) * 100
+    );
     setFillWidthPercent(percent);
   };
 
@@ -67,7 +65,7 @@ export default function Modal({
         }}
         onKeyDown={handleKeyDown}
       >
-        <div className={styles.modalText}>Set the limit(GB)</div>
+        <div className={styles.modalText}>Set the limit(MB)</div>
         <div className={styles.sliderWrapper}>
           <div className={styles.sliderBackground} />
           <div
@@ -78,8 +76,8 @@ export default function Modal({
           />
           <input
             type="range"
-            min="1"
-            max="100"
+            min={limit.min / 1024 ** 2}
+            max={limit.max / 1024 ** 2}
             step="1"
             value={value}
             className={styles.slider}
@@ -94,7 +92,7 @@ export default function Modal({
               // left: `${fillWidthPercent}%`
               left: `calc(${26 /
                 10}px + ${fillWidthPercent}% - ${fillWidthPercent /
-                100} * ${26}px)`
+                100} * ${30}px)`
             }}
           >
             {value}

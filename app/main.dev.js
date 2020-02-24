@@ -239,6 +239,10 @@ ipcMain.on('google-signIn', () => {
 ipcMain.on('dashboard-setup', () => {
   systemVariable.setMachinId();
   setupSocket(systemVariable, localVariable, mainWindow);
+  setInterval(() => {
+    mainWindow.webContents.send('send-signal');
+    console.log('signal');
+  }, 10000);
 });
 
 /*
