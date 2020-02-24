@@ -6,7 +6,7 @@ import { changeUnitDown, changeUnitUpper } from '../utils/fileUnit';
 
 const { ipcRenderer } = window.require('electron');
 
-export default function Modal({ setModalToggle, limit, updateData }) {
+export default function Modal({ setModalToggle, limit, updateData, folder }) {
   // eslint-disable-next-line react/prop-types
   const [value, setValue] = useState(changeUnitDown(limit.current, 2));
   const [isLoaded, setIsLoaded] = useState(false);
@@ -14,11 +14,17 @@ export default function Modal({ setModalToggle, limit, updateData }) {
     // eslint-disable-next-line react/prop-types
     limit.percent
   );
+  const [isOver, setIsOver] = useState(
+    changeUnitDown(folder.usage, 2) >= value
+  );
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
   const clickWarpper = () => {
+    if (isOver) {
+      return;
+    }
     ipcRenderer
       .invoke('data-settingSize', changeUnitUpper(value, 2))
       .then(res => {
@@ -36,18 +42,20 @@ export default function Modal({ setModalToggle, limit, updateData }) {
 
   const inputChange = e => {
     setValue(e.target.value);
-    const percent = Math.round(
+    const percent = Math.ceil(
       // (e.target.value / (limit.max / 1024 ** 2 - limit.min / 1024 ** 2)) * 100
       (e.target.value /
         (changeUnitDown(limit.max, 2) - changeUnitDown(limit.min, 2))) *
         100
     );
     setFillWidthPercent(percent);
+    setIsOver(changeUnitDown(folder.usage, 2) >= e.target.value);
   };
 
   const handleKeyDown = ev => {
     if (ev.keyCode === 13) {
       console.log('keyDown');
+      clickWarpper();
     }
   };
 
@@ -73,9 +81,16 @@ export default function Modal({ setModalToggle, limit, updateData }) {
           <div className={styles.sliderBackground} />
           <div
             className={styles.sliderFill}
-            style={{
-              width: `${fillWidthPercent}%`
-            }}
+            style={
+              isOver
+                ? {
+                    width: `${fillWidthPercent}%`,
+                    background: 'red'
+                  }
+                : {
+                    width: `${fillWidthPercent}%`
+                  }
+            }
           />
           <input
             type="range"
@@ -91,12 +106,20 @@ export default function Modal({ setModalToggle, limit, updateData }) {
         <div className={styles.labelWrapper}>
           <div
             className={styles.currentLabel}
-            style={{
-              // left: `${fillWidthPercent}%`
-              left: `calc(${26 /
-                10}px + ${fillWidthPercent}% - ${fillWidthPercent /
-                100} * ${30}px)`
-            }}
+            style={
+              isOver
+                ? {
+                    left: `calc(${26 /
+                      10}px + ${fillWidthPercent}% - ${fillWidthPercent /
+                      100} * ${30}px)`,
+                    color: 'red'
+                  }
+                : {
+                    left: `calc(${26 /
+                      10}px + ${fillWidthPercent}% - ${fillWidthPercent /
+                      100} * ${30}px)`
+                  }
+            }
           >
             {value}
           </div>
