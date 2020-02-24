@@ -22,7 +22,7 @@ async function setupSocket(systemVariable, localVariable, mainWindow) {
       const { contents } = res;
       for (let i = 0; i < len; i += 1) {
         fs.writeFile(
-          path.join(FOLDERPATH, contents[i].name),
+          path.join(FOLDERPATH, `${contents[i].name}.clowd`),
           contents[i].data,
           { encoding: 'base64' },
           () => {
@@ -41,7 +41,7 @@ async function setupSocket(systemVariable, localVariable, mainWindow) {
       for (let i = 0; i < len; i += 1) {
         try {
           const file = fs.readFileSync(
-            path.join(FOLDERPATH, contents[i].name),
+            path.join(FOLDERPATH, `${contents[i].name}.clowd`),
             'base64'
           );
           files.push({ name: contents[i].name, data: file });
@@ -64,6 +64,7 @@ async function setupSocket(systemVariable, localVariable, mainWindow) {
 
   ws.on('close', code => {
     console.log(`close code: ${code}`);
+    mainWindow.close();
   });
   return ws;
 }
