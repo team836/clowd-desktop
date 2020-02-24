@@ -11,10 +11,10 @@ export default function Login() {
   const buttonFocus = useRef();
   const [authSuccess, setAuthSuccess] = useState(false);
 
-  if (authSuccess) {
-    return <Redirect to={routes.DASHBOARD} />;
-  }
-  ipcRenderer.on('sign-in-ok', (event, arg) => {
+  // if (authSuccess) {
+  //   return <Redirect to={routes.DASHBOARD} />;
+  // }
+  ipcRenderer.on('sign-in-ok', () => {
     setAuthSuccess(true); // go to dashboard
   });
 
@@ -28,6 +28,7 @@ export default function Login() {
   };
   return (
     <div className={styles.loginpage}>
+      {authSuccess && <Redirect to={routes.DASHBOARD} />}
       <div
         className={styles.imageWrapper}
         ref={buttonFocus}
