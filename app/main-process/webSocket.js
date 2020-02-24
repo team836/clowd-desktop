@@ -1,11 +1,8 @@
 import WebSocket from 'ws';
-import path from 'path';
-import fs from 'fs';
-
+import { saveFiles, sendFiles, deleteFiles } from './fileAction';
 import { SOCKETSERVER, FOLDERPATH } from '../constants/path';
 
 async function setupSocket(systemVariable, localVariable, mainWindow) {
-  console.log(systemVariable.accessToken);
   const ws = new WebSocket(`${SOCKETSERVER}?mid=${systemVariable.mid}`, {
     headers: {
       Authorization: `Bearer ${systemVariable.accessToken}`
@@ -16,41 +13,31 @@ async function setupSocket(systemVariable, localVariable, mainWindow) {
   });
   ws.on('message', async function incoming(data) {
     const res = JSON.parse(data);
-    if (res.type === 'save') {
-      console.log('save');
-      const len = res.contents.length;
-      const { contents } = res;
-      for (let i = 0; i < len; i += 1) {
-        fs.writeFile(
-          path.join(FOLDERPATH, `${contents[i].name}.clowd`),
-          contents[i].data,
-          { encoding: 'base64' },
-          () => {
-            // console.log('File created');
-          }
-        );
+    switch (res.type) {
+      case 'save': {
+        saveFiles(res, FOLDERPATH);
+        const obj = await localVariable.checkLocalVariable(FOLDERPATH);
+        mainWindow.webContents.send('file-update', obj);
+        console.log('save done');
+        break;
       }
-      const obj = await localVariable.checkLocalVariable(FOLDERPATH);
-      mainWindow.webContents.send('file-update', obj);
-      console.log('done');
-    } else if (res.type === 'down') {
-      console.log('down');
-      const len = res.contents.length;
-      const { contents } = res;
-      const files = [];
-      for (let i = 0; i < len; i += 1) {
-        try {
-          const file = fs.readFileSync(
-            path.join(FOLDERPATH, `${contents[i].name}.clowd`),
-            'base64'
-          );
-          files.push({ name: contents[i].name, data: file });
-        } catch (err) {
-          files.push({ name: contents[i].name, data: '' });
-        }
+      case 'down': {
+        const files = sendFiles(res, FOLDERPATH);
+        mainWindow.webContents.send('send-signal');
+        ws.send(JSON.stringify(files));
+        console.log('down done');
+        break;
       }
-      ws.send(JSON.stringify(files));
-      console.log('done');
+      case 'delete': {
+        deleteFiles(res, FOLDERPATH);
+        const obj = await localVariable.checkLocalVariable(FOLDERPATH);
+        mainWindow.webContents.send('file-update', obj);
+        console.log('delete done');
+        break;
+      }
+      default: {
+        console.log('case error');
+      }
     }
   });
   ws.on('ping', function ping(data) {
@@ -64,7 +51,7 @@ async function setupSocket(systemVariable, localVariable, mainWindow) {
 
   ws.on('close', code => {
     console.log(`close code: ${code}`);
-    mainWindow.close();
+    // mainWindow.close();
   });
   return ws;
 }
