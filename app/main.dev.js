@@ -19,8 +19,6 @@ import setupSocket from './main-process/webSocket';
 import LocalVariable from './main-process/LocalVariable';
 import SystemVariable from './main-process/SystemVariable';
 
-// import MenuBuilder from './menu';
-
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
 
 export default class AppUpdater {
@@ -73,7 +71,8 @@ const createWindow = async () => {
     minWidth: 800,
     minHeight: 480,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      devTools: false
     }
   });
 
@@ -101,6 +100,8 @@ const createWindow = async () => {
   // const menuBuilder = new MenuBuilder(mainWindow);
   // menuBuilder.buildMenu();
 
+  // mainWindow.webContents.closeDevTools();
+
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   // new AppUpdater();
@@ -123,7 +124,8 @@ const createAuthWindow = async upper => {
     maxWidth: 600,
     maxHeight: 800,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      devTools: false
     }
   });
 
@@ -190,6 +192,7 @@ const createAuthWindow = async upper => {
     }
     // More complex code to handle tokens goes here
   });
+  mainWindow.setMenuBarVisibility(false);
 
   // const menuBuilder = new MenuBuilder(authWindow);
   // menuBuilder.buildMenu();
