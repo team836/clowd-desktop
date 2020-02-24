@@ -8,22 +8,41 @@ Clowd-Desktop is desktop application for Clowder who share their remaining stora
 
 ## Functions
 
-> 1.  main-process
-> 2.  renderer-process
-> 3.  socket
-> 4.  screen
+> 1.  setup
+> 2.  screen
 
-## main-process
+## setup
 
-main-process
+### Install
 
-## renderer-process
+First, clone the repo via git:
 
-renderer-process
+```bash
+git clone https://github.com/team836/clowd-desktop.git clowd-desktop
+```
 
-## socket
+And then install the dependencies with yarn.
 
-socket
+```bash
+$ cd clowd-desktop
+$ yarn
+```
+
+### Starting Development
+
+Start the app in the `dev` environment. This starts the renderer process in [**hot-module-replacement**](https://webpack.js.org/guides/hmr-react/) mode and starts a webpack dev server that sends hot updates to the renderer process:
+
+```bash
+$ yarn dev
+```
+
+### Packaging for Production
+
+To package apps for the local platform:
+
+```bash
+$ yarn package
+```
 
 ## screen
 
