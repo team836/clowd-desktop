@@ -48,8 +48,5 @@ $ yarn package
 
 <br>
 <p align="center">login-page</p>
-<p align="center"><img src="./resources/images/login.png" width="60%" height="40%"></p>
 <p align="center">dashboard-page</p>
-<p align="center"><img src="./resources/images/dashboard.png" width="60%" height="40%"></p>
 <p align="center">modal-page</p>
-<p align="center"><img src="./resources/images/modal.png" width="60%" height="40%"></p>
