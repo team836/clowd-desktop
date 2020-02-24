@@ -1,4 +1,4 @@
-[CLOWD-API](https://team836.github.io/)
+[CLOWD-DESKTOP](https://team836.github.io/)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/master/LICENSE)
 ==============
 
@@ -8,18 +8,18 @@ Clowd-Desktop repository is for Clowder
 
 ## Functions
 
-> 1.  Basic API
-> 2.  User management
-> 3.  Token management
-> 4.  User Authentication
+> 1.  main-process
+> 2.  renderer-process
+> 3.  socket
+> 4.  screen
 
-## Basic API
+## main-process
 
 Providing user Information to Front-End side
 
 > 1. Offer user Information to Front-End
 
-## User management
+## renderer-process
 
 User Database has 3 tables (User table, Clowder table, Clowdee table)
 Clowder table and Clowdee table have dependency to User table and always handled User table with clowder table or clowdee table together.  
@@ -30,7 +30,7 @@ And also It can make managing user easily.
 > 2. User Sign In / Out
 > 3. Manage User DB between clowder & clowdee
 
-## User Authentication
+## socket
 
 Basically we use Google Oauth2.0 API.
 Our system has multi-server which is GO server and Express server. We make GO server for
@@ -45,7 +45,7 @@ refresh the token in the API server, not GO server.
 > 2. Check the user's validity in the API server
 > 3. Don't check the user's valid when access to GO server
 
-## Token management
+## screen
 
 Our server is using Google Oauth2.0 API and token authentication. We get user Information from the
 Google and make accessToken and refreshToken. As we mentioned, It limit the access token's expiry time very short and It force to user should refresh the token many time.
