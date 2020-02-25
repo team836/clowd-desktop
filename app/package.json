@@ -1,7 +1,7 @@
 {
   "name": "clowd",
   "productName": "clowd",
-  "version": "1.2",
+  "version": "0.18.1",
   "description": "clowd desktop application",
   "main": "./main.prod.js",
   "author": {
